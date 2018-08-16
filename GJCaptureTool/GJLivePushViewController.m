@@ -13,15 +13,15 @@
 #import <ARKit/ARConfiguration.h>
 #import "ZipArchive/ZipArchive.h"
 
-//#define PUSH_TIP_SHOW 1
-//#define PULL_TIP_SHOW 1
+#define PUSH_TIP_SHOW 1
+#define PULL_TIP_SHOW 1
 
 
 @interface GJSliderView:UISlider{
     UILabel * _titleLab;
     UILabel * _valueLab;
-    
 }
+
 @property(nonatomic,copy)NSString* title;
 @end
 @implementation GJSliderView
@@ -1028,8 +1028,8 @@
     _pullBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     _pullBtn.layer.borderWidth = 1;
     _pullBtn.layer.borderColor = [UIColor blackColor].CGColor;
-    [_pullBtn setTitle:@"拉流1开始" forState:UIControlStateNormal];
-    [_pullBtn setTitle:@"拉流1结束" forState:UIControlStateSelected];
+    [_pullBtn setTitle:@"拉流开始" forState:UIControlStateNormal];
+    [_pullBtn setTitle:@"拉流结束" forState:UIControlStateSelected];
     [_pullBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [_pullBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
     [_pullBtn addTarget:self action:@selector(takeSelect:) forControlEvents:UIControlEventTouchUpInside];
@@ -1131,13 +1131,12 @@
     CGRect rect = self.view.bounds;
     rect.size.height = 30;
     _pullBtn.frame = rect;
+    
     rect.origin.x = 0;
     rect.origin.y = CGRectGetMaxY(rect);
     rect.size.height = frame.size.height - rect.origin.y;
-    
     _pull.previewView.frame = rect;
     
-    rect.origin.y -= _pullBtn.frame.size.height;
     _tipContentView.frame = rect;
     
     rect.size.height *= 1.0/_viewArr.count;
@@ -1145,8 +1144,8 @@
 
     for (int i = 0; i<_viewArr.count; i++) {
         UIView* view = _viewArr[i];
-        rect.origin.y += rect.size.height;
         view.frame = rect;
+        rect.origin.y += rect.size.height;
     }
 }
 
