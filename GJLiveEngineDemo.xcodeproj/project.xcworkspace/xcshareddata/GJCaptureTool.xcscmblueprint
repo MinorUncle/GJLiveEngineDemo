@@ -1,0 +1,86 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "8531738AFD4FE1FAF1D2FBB5BC4445ED8B189CFD",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "9670387BEDE34F0C92575289D60ABAE42AB2C0EC" : 9223372036854775807,
+    "209E9479A1A97E12124DF571AB7D5159BE114365" : 9223372036854775807,
+    "36C67C0385EBFE1DD9D872E42E2540A54C89CF0D" : 9223372036854775807,
+    "1C9FDC6BD57F4F885A769CBC0880C8568DFADE4E" : 9223372036854775807,
+    "70C44531FBADDC48462D431D1E6F94654B163C8D" : 9223372036854775807,
+    "8531738AFD4FE1FAF1D2FBB5BC4445ED8B189CFD" : 9223372036854775807,
+    "D157E2235DB6CAA02B4866781723863E4DFFD9EA" : 9223372036854775807,
+    "1F24E7429ED5C58BA1FE17D97548CE86D6FD0783" : 9223372036854775807,
+    "0B93145D3ABCBD6C31A0B6C6E9862005A459ADD3" : 9223372036854775807,
+    "77616FF66051A7C7FCD7F759AF4655FEEA08155B" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "4A40DBAC-5404-444B-91AB-93552CD743F6",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "9670387BEDE34F0C92575289D60ABAE42AB2C0EC" : "GJQueue\/",
+    "209E9479A1A97E12124DF571AB7D5159BE114365" : "queue\/",
+    "36C67C0385EBFE1DD9D872E42E2540A54C89CF0D" : "x264Code\/",
+    "1C9FDC6BD57F4F885A769CBC0880C8568DFADE4E" : "DarwinStreamingServerCode\/",
+    "70C44531FBADDC48462D431D1E6F94654B163C8D" : "GJImage\/GJImage\/",
+    "8531738AFD4FE1FAF1D2FBB5BC4445ED8B189CFD" : "GJCaptureTool\/",
+    "D157E2235DB6CAA02B4866781723863E4DFFD9EA" : "GJMp4Demo\/",
+    "1F24E7429ED5C58BA1FE17D97548CE86D6FD0783" : "GJImage\/",
+    "0B93145D3ABCBD6C31A0B6C6E9862005A459ADD3" : "ffmpegCode\/",
+    "77616FF66051A7C7FCD7F759AF4655FEEA08155B" : "rtmpAndOpenssl\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "GJCaptureTool",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "GJCaptureTool.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/MinorUncle\/ffmpegCode.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0B93145D3ABCBD6C31A0B6C6E9862005A459ADD3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/MinorUncle\/DarwinStreamingServerCode.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1C9FDC6BD57F4F885A769CBC0880C8568DFADE4E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/MinorUncle\/GJImage.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1F24E7429ED5C58BA1FE17D97548CE86D6FD0783"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:MinorUncle\/queue.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "209E9479A1A97E12124DF571AB7D5159BE114365"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/MinorUncle\/x264Code.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "36C67C0385EBFE1DD9D872E42E2540A54C89CF0D"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/MinorUncle\/GJImage.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "70C44531FBADDC48462D431D1E6F94654B163C8D"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/MinorUncle\/rtmpAndOpenssl.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "77616FF66051A7C7FCD7F759AF4655FEEA08155B"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/MinorUncle\/GJCaptureTool.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8531738AFD4FE1FAF1D2FBB5BC4445ED8B189CFD"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/MinorUncle\/GJQueue.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9670387BEDE34F0C92575289D60ABAE42AB2C0EC"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/MinorUncle\/GJMp4Demo.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D157E2235DB6CAA02B4866781723863E4DFFD9EA"
+    }
+  ]
+}
