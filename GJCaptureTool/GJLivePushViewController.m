@@ -1167,52 +1167,35 @@
 }
 
 -(void)livePull:(GJLivePull *)livePull connentSuccessWithElapsed:(int)elapsed{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        _pullStateLab.text = [NSString stringWithFormat:@"connent during：%d ms",elapsed];
-    });
-    
+    _pullStateLab.text = [NSString stringWithFormat:@"connent during：%d ms",elapsed];    
 }
 -(void)livePull:(GJLivePull *)livePull closeConnent:(GJPullSessionInfo *)info resion:(GJConnentCloceReason)reason{
     GJPullSessionInfo sInfo= *info;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        _pullStateLab.text = [NSString stringWithFormat:@"connent total：%ld ms",sInfo.sessionDuring];
-    });
+    _pullStateLab.text = [NSString stringWithFormat:@"connent total：%ld ms",sInfo.sessionDuring];
 }
 -(void)livePull:(GJLivePull *)livePull updatePullStatus:(GJPullSessionStatus *)status{
     GJPullSessionStatus pullStatus = *status;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        _pullRateLab.text = [NSString stringWithFormat:@"bitrate V:%0.2f A:%0.2f",pullStatus.videoStatus.bitrate/1024.0,pullStatus.audioStatus.bitrate/1024.0];
-        _videoCacheLab.text = [NSString stringWithFormat:@"cache V t:%ld ms f:%ld",pullStatus.videoStatus.cacheTime,pullStatus.videoStatus.cacheCount];
-        _audioCacheLab.text = [NSString stringWithFormat:@"cache A t:%ld ms f:%ld",pullStatus.audioStatus.cacheTime,pullStatus.audioStatus.cacheCount];
-    });
+    _pullRateLab.text = [NSString stringWithFormat:@"bitrate V:%0.2f A:%0.2f",pullStatus.videoStatus.bitrate/1024.0,pullStatus.audioStatus.bitrate/1024.0];
+    _videoCacheLab.text = [NSString stringWithFormat:@"cache V t:%ld ms f:%ld",pullStatus.videoStatus.cacheTime,pullStatus.videoStatus.cacheCount];
+    _audioCacheLab.text = [NSString stringWithFormat:@"cache A t:%ld ms f:%ld",pullStatus.audioStatus.cacheTime,pullStatus.audioStatus.cacheCount];
 }
 
--(void)livePull:(GJLivePull *)livePull netShakeUpdate:(long)shake{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        _netShake.text = [NSString stringWithFormat:@"Max netShake:%ld ms",shake];
-    });
-}
--(void)livePull:(GJLivePull *)livePull netShakeRangeUpdate:(long)shake{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        _shakeRange.text = [NSString stringWithFormat:@"shake collect delay:%ld ms",shake];
-    });
+-(void)livePull:(GJLivePull *)livePull netShakeUpdate:(GJShakeUpdateInfo*)shake{
+    _netShake.text = [NSString stringWithFormat:@"shake:%ld ms shakeDuring:%ld",shake->shake,shake->netShakeRange];
+    _shakeRange.text = [NSString stringWithFormat:@"low:%ld control:%ld high:%ld",shake->lowWater,shake->controlWater,shake->highWater];
 }
 
 -(void)livePull:(GJLivePull *)livePull testNetShake:(long)shake{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        _testNetShake.text = [NSString stringWithFormat:@"Max NetShake Measure:%ld ms",shake];
-    });
+    _testNetShake.text = [NSString stringWithFormat:@"Max NetShake Measure:%ld ms",shake];
 }
 
 -(void)livePull:(GJLivePull *)livePull dewaterUpdate:(BOOL)isDewatering{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (isDewatering) {
-            _dewaterTimes++;
-            _dewaterStatus.text = [NSString stringWithFormat:@"dewaterStatus:true times:%ld",(long)_dewaterTimes];
-        }else{
-            _dewaterStatus.text = [NSString stringWithFormat:@"dewaterStatus:false times:%ld",(long)_dewaterTimes];
-        }
-    });
+    if (isDewatering) {
+        _dewaterTimes++;
+        _dewaterStatus.text = [NSString stringWithFormat:@"dewaterStatus:true times:%ld",(long)_dewaterTimes];
+    }else{
+        _dewaterStatus.text = [NSString stringWithFormat:@"dewaterStatus:false times:%ld",(long)_dewaterTimes];
+    }
 }
 -(void)livePull:(GJLivePull *)livePull firstFrameDecode:(GJPullFirstFrameInfo *)info{
     NSLog(@"firstFrameDecode w:%f,h:%f delay:%ld ts:%ld",info->size.width,info->size.height,info->delay,(long)[[NSDate date]timeIntervalSince1970]*1000);
@@ -1221,11 +1204,9 @@
 
 -(void)livePull:(GJLivePull *)livePull firstFrameRender:(GJPullFirstFrameInfo *)info{
     GLong delay = info->delay;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        _pullStateLab.text = [NSString stringWithFormat:@"%@,first render delay:%ld ms",_pullStateLab.text,delay];
+    
+    _pullStateLab.text = [NSString stringWithFormat:@"%@,first render delay:%ld ms",_pullStateLab.text,delay];
 
-    });
     NSLog(@"firstFrameRender w:%f,h:%f delay:%ld ts:%ld",info->size.width,info->size.height,info->delay,(long)[[NSDate date]timeIntervalSince1970]*1000);
 }
 
@@ -1234,8 +1215,7 @@
         case kLivePullReadPacketError:
         case kLivePullConnectError:{
             [livePull stopStreamPull];
-            sleep(1);
-            dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 if(_pullBtn.selected){
                     _pullStateLab.text = @"尝试重连中";
                     [livePull startStreamPullWithUrl:_pullAddr];
