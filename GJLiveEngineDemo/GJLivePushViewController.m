@@ -1272,10 +1272,12 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(barItemTap:)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(barItemTap:)];
     _pulls = [[NSMutableArray alloc]initWithCapacity:2];
-    GJ_LogSetLevel(GJ_LOGDEBUG);
     NSString* path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, true)[0];
     path = [path stringByAppendingPathComponent:@"live.log"];
-#ifndef DEBUG
+#ifdef DEBUG
+    GJ_LogSetLevel(GJ_LOGINFO);
+#else
+    GJ_LogSetLevel(GJ_LOGDEBUG);
     GJ_LogSetOutput(path.UTF8String);
 #endif
 
