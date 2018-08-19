@@ -1118,7 +1118,7 @@
     _playerBufferLab = [[UILabel alloc]init];
     _playerBufferLab.numberOfLines = 0;
     _playerBufferLab.textColor = [UIColor redColor];
-    _playerBufferLab.text = @"buffer：0 times:0";
+    _playerBufferLab.text = @"waterStatus：0 times:0";
     _playerBufferLab.font = [UIFont systemFontOfSize:10];
     [_tipContentView addSubview:_playerBufferLab];
     [_viewArr addObject:_playerBufferLab];
@@ -1155,7 +1155,7 @@
         _pullStateLab.text = @"连接中";
         _dewaterTimes = _bufferTimes = 0;
         _dewaterStatus.text = [NSString stringWithFormat:@"dewaterStatus:false times:0"];
-        _playerBufferLab.text = [NSString stringWithFormat:@"buffer：0 times:0"];
+        _playerBufferLab.text = [NSString stringWithFormat:@"waterStatus：0 times:0"];
 
         if(![_pull startStreamPullWithUrl:_pullAddr]){
             btn.selected = NO;
@@ -1234,7 +1234,7 @@
         if (duration == 0.0) {
             _bufferTimes ++;
         }
-        _playerBufferLab.text = [NSString stringWithFormat:@"buffer：%0.2f %ld ms times:%ld",percent,duration,(long)_bufferTimes];
+        _playerBufferLab.text = [NSString stringWithFormat:@"waterStatus：%0.2f %ld ms times:%ld",percent,duration,(long)_bufferTimes];
     });
 }
 
