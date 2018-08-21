@@ -1275,11 +1275,11 @@
     NSString* path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, true)[0];
     path = [path stringByAppendingPathComponent:@"live.log"];
 #ifdef DEBUG
-    GJ_LogSetLevel(GJ_LOGINFO);
+    GJ_LogSetLevel(GJ_LOGDEBUG);
 #else
     GJ_LogSetLevel(GJ_LOGDEBUG);
-    GJ_LogSetOutput(path.UTF8String);
 #endif
+    GJ_LogSetOutput(path.UTF8String);
 
     if(_type == kGJCaptureTypeAR){
         if( [UIDevice currentDevice].systemVersion.doubleValue < 11.0 || !ARConfiguration.isSupported){
