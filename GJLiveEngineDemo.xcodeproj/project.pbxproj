@@ -23,7 +23,6 @@
 		275299C921183C1100DD0403 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C573F16F1D4B4146002607B6 /* libz.tbd */; };
 		275299CA21183C9800DD0403 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A40DFCD1EE8E1320047E0F0 /* Accelerate.framework */; };
 		276408AD21245D8600D6171E /* GJLiveEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276408AC21245D8600D6171E /* GJLiveEngine.framework */; };
-		276409642126D34B00D6171E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 276409632126D34B00D6171E /* Info.plist */; };
 		6A03892B1FF13004005AC7CE /* Particle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A03892A1FF13004005AC7CE /* Particle.png */; };
 		6A04022020CA5A190098A86C /* GJLivePushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041702841E5FC3D100D5B5D9 /* GJLivePushViewController.m */; };
 		6A3488431F453803008223AA /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A34882B1F453803008223AA /* 0.png */; };
@@ -514,7 +513,6 @@
 				6A582239202AF473002AFF76 /* client.json in Resources */,
 				C561AC9C1D51D3DC00113453 /* Assets.xcassets in Resources */,
 				2707298C20F389C400DA051F /* ios.h264 in Resources */,
-				276409642126D34B00D6171E /* Info.plist in Resources */,
 				C561ACA31D51D3DC00113453 /* LaunchScreen.storyboard in Resources */,
 				6A85F9951F00F0B10037A64F /* MixTest.mp3 in Resources */,
 				2707294220F24F0D00DA051F /* hkbs.zip in Resources */,
