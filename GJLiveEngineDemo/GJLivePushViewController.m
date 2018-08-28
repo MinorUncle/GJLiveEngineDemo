@@ -879,10 +879,10 @@
 
 
 
--(void)livePush:(GJLivePush *)livePush connentSuccessWithElapsed:(GLong)elapsed{
+-(void)livePush:(GJLivePush *)livePush connectSuccessWithElapsed:(GLong)elapsed{
     _pushStateLab.text = [NSString stringWithFormat:@"推流连接耗时：%ld ms",elapsed];
 }
--(void)livePush:(GJLivePush *)livePush closeConnent:(GJPushSessionInfo *)info resion:(GJConnentCloceReason)reason{
+-(void)livePush:(GJLivePush *)livePush closeConnect:(GJPushSessionInfo *)info resion:(GJConnectCloceReason)reason{
     GJPushSessionInfo pushInfo = *info;
     dispatch_async(dispatch_get_main_queue(), ^{
         _pushStateLab.text = [NSString stringWithFormat:@"推流关闭,推流时长：%ld ms",pushInfo.sessionDuring];
@@ -1166,12 +1166,12 @@
     }
 }
 
--(void)livePull:(GJLivePull *)livePull connentSuccessWithElapsed:(int)elapsed{
-    _pullStateLab.text = [NSString stringWithFormat:@"connent during：%d ms",elapsed];    
+-(void)livePull:(GJLivePull *)livePull connectSuccessWithElapsed:(int)elapsed{
+    _pullStateLab.text = [NSString stringWithFormat:@"connect during：%d ms",elapsed];
 }
--(void)livePull:(GJLivePull *)livePull closeConnent:(GJPullSessionInfo *)info resion:(GJConnentCloceReason)reason{
+-(void)livePull:(GJLivePull *)livePull closeConnect:(GJPullSessionInfo *)info resion:(GJConnectCloceReason)reason{
     GJPullSessionInfo sInfo= *info;
-    _pullStateLab.text = [NSString stringWithFormat:@"connent total：%ld ms",sInfo.sessionDuring];
+    _pullStateLab.text = [NSString stringWithFormat:@"connect total：%ld ms",sInfo.sessionDuring];
 }
 -(void)livePull:(GJLivePull *)livePull updatePullStatus:(GJPullSessionStatus *)status{
     GJPullSessionStatus pullStatus = *status;
@@ -1246,10 +1246,11 @@
 
 
 @end
+static dispatch_queue_t _cleanMemoryQueue;
+
 @interface GJLivePushViewController ()
 {
     PushManager* _pushManager;
-    
 }
 @property (strong, nonatomic) UIView *bottomView;
 @property(strong,nonatomic)NSMutableArray<PullManager*>* pulls;
@@ -1280,7 +1281,10 @@
     GJ_LogSetLevel(GJ_LOGDEBUG);
 #endif
     GJ_LogSetOutput(path.UTF8String);
-
+    
+    if (_cleanMemoryQueue == GNULL) {
+        _cleanMemoryQueue = dispatch_queue_create("GJ.CleanMemory", DISPATCH_QUEUE_SERIAL);
+    }
     if(_type == kGJCaptureTypeAR){
         if( [UIDevice currentDevice].systemVersion.doubleValue < 11.0 || !ARConfiguration.isSupported){
             [[[UIAlertView alloc]initWithTitle:@"提示" message:@"该手机不支持ar,已切换到普通直播" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil] show];
@@ -1336,9 +1340,12 @@
         }
         [_pulls removeAllObjects];
         
-        cleanMemory(GTrue);
-        NSLog(@"clean over");
+        dispatch_async(_cleanMemoryQueue, ^{
+            cleanMemory(GTrue);
+            NSLog(@"clean over");
+        });
     });
+
 }
 
 -(void)buildUI{
