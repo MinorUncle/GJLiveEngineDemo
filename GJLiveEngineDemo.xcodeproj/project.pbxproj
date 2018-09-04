@@ -423,7 +423,7 @@
 					};
 					C54FA8A71D21006000A0D3C3 = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = K7MDP8Y272;
+						DevelopmentTeam = N4879DD4BD;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -536,7 +536,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ! -d \"./GJLiveEngine/.git\" ]; then\nrm -rf ./GJLiveEngine\ngit clone git@github.com:MinorUncle/GJLiveEngine.git\ncd GJLiveEngine\nliveEngineID=`git rev-parse --short HEAD`\ncd ..\nplistFIle=\"GJLiveEngineDemo/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set GJLiveEngineID ${liveEngineID}\" $plistFIle\nelif [ ! -d \"./GJLiveEngine/GJLiveEngine.framework\" ]; then\ncd GJLiveEngine\ngit pull\ngit checkout .\nliveEngineID=`git rev-parse --short HEAD`\ncd ..\n\nplistFIle=\"GJLiveEngineDemo/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set GJLiveEngineID ${liveEngineID}\" $plistFIle\nfi\n";
+			shellScript = "exit 0\nif [ ! -d \"./GJLiveEngine/.git\" ]; then\n\nrm -rf ./GJLiveEngine\ngit clone git@github.com:MinorUncle/GJLiveEngine.git\ncd GJLiveEngine\nliveEngineID=`git rev-parse --short HEAD`\ncd ..\nplistFIle=\"GJLiveEngineDemo/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set GJLiveEngineID ${liveEngineID}\" $plistFIle\nelif [ ! -d \"./GJLiveEngine/GJLiveEngine.framework\" ]; then\n\ncd GJLiveEngine\ngit pull\ngit checkout .\nliveEngineID=`git rev-parse --short HEAD`\ncd ..\n\nplistFIle=\"GJLiveEngineDemo/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set GJLiveEngineID ${liveEngineID}\" $plistFIle\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -766,7 +766,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = K7MDP8Y272;
+				DEVELOPMENT_TEAM = N4879DD4BD;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -778,7 +778,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.melot.engine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.melot.engine.gj;
 				PRODUCT_NAME = GJLiveEngineDemo;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -792,7 +792,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = K7MDP8Y272;
+				DEVELOPMENT_TEAM = N4879DD4BD;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -805,7 +805,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.melot.engine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.melot.engine.gj;
 				PRODUCT_NAME = GJLiveEngineDemo;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -188,7 +188,7 @@
         _livePush.delegate = self;
         _livePush.cameraPosition = GJCameraPositionFront;
         NSString* path = [[NSBundle mainBundle]pathForResource:@"track_data" ofType:@"dat"];
-        [_livePush prepareVideoEffectWithBaseData:path];
+//        [_livePush prepareVideoEffectWithBaseData:path];
 //
 //        _livePush.eyeEnlargement = 50;
 //        _livePush.skinSoften = 50;
@@ -904,18 +904,22 @@
             });
         }
         case kLivePushWritePacketError:{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                _pushStateLab.text =@"尝试重连中";
-            });
-            dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                [_livePush stopStreamPush];
-                if (_pushStartBtn.selected) {
-                    if(![_livePush startStreamPushWithUrl:_pushAddr]){
-                        NSLog(@"startStreamPushWithUrl error");
-                    };
-                }
-            });
-
+//            [_livePush stopStreamPush];
+//            sleep(1);
+//            if (_pushStartBtn.selected) {
+//                    if(![_livePush startStreamPushWithUrl:_pushAddr]){
+//                        NSLog(@"startStreamPushWithUrl error");
+//                    };
+//            }
+            [_livePush stopStreamPush];
+            _pushStateLab.text =@"尝试重连中";
+            
+            [[NSRunLoop currentRunLoop]runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+            if (_pushStartBtn.selected) {
+                if(![_livePush startStreamPushWithUrl:_pushAddr]){
+                    NSLog(@"startStreamPushWithUrl error");
+                };
+            }
             break;
         }
         default:
@@ -1328,26 +1332,6 @@ static dispatch_queue_t _cleanMemoryQueue;
 
 }
 
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [_pushManager.livePush stopPreview];
-        [_pushManager.livePush stopStreamPush];
-        _pushManager = nil;
-        
-        for (PullManager* pull in _pulls) {
-            [pull.pull stopStreamPull];
-        }
-        [_pulls removeAllObjects];
-        
-        dispatch_async(_cleanMemoryQueue, ^{
-            cleanMemory(GTrue);
-            NSLog(@"clean over");
-        });
-    });
-
-}
-
 -(void)buildUI{
     if (_pushAddr.length > 3)[self.view addSubview:_pushManager.view];
     
@@ -1516,7 +1500,23 @@ static dispatch_queue_t _cleanMemoryQueue;
 }
 
 -(void)dealloc{
+    [_pushManager.livePush stopPreview];
+    [_pushManager.livePush stopStreamPush];
+    _pushManager = nil;
     
+    for (PullManager* pull in _pulls) {
+        [pull.pull stopStreamPull];
+    }
+    dispatch_async(_cleanMemoryQueue, ^{
+        //正常情况请用GFalse防止阻塞，此处只是用来检验是否有未释放内存。
+#ifdef DEBUG
+        cleanMemory(GTrue);
+#else
+        cleanMemory(GFalse);
+#endif
+        NSLog(@"clean over");
+    });
+
     NSLog(@"dealloc:%@",self);
 }
 /*
