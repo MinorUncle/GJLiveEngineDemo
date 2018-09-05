@@ -160,9 +160,9 @@
 
         _pushAddr = url;
         _videoSize = @{
-                       @"360*480":[NSValue valueWithCGSize:CGSizeMake(360, 480)],
-                       @"540*960":[NSValue valueWithCGSize:CGSizeMake(540, 960)],
-//                       @"480*640":[NSValue valueWithCGSize:CGSizeMake(480, 640)],
+//                       @"360*480":[NSValue valueWithCGSize:CGSizeMake(360, 480)],
+//                       @"540*960":[NSValue valueWithCGSize:CGSizeMake(540, 960)],
+                       @"480*640":[NSValue valueWithCGSize:CGSizeMake(480, 640)],
                        @"720*1280":[NSValue valueWithCGSize:CGSizeMake(720, 1280)]
                        };
         _stickerPath = @[@"bear",@"bd",@"hkbs",@"lb",@"null"];
@@ -178,7 +178,7 @@
         if (type == kGJCaptureTypePaint) {
             config.mFps = 30;
         }else{
-            config.mFps = 15;
+            config.mFps = 25;
         }
         config.mAudioBitrate = 64*1000;
         _livePush = [[GJLivePush alloc]init];
