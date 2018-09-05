@@ -536,7 +536,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ! -d \"./GJLiveEngine/.git\" ]; then\n\nrm -rf ./GJLiveEngine\ngit clone git@github.com:MinorUncle/GJLiveEngine.git\ncd GJLiveEngine\nliveEngineID=`git rev-parse --short HEAD`\ncd ..\nplistFIle=\"GJLiveEngineDemo/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set GJLiveEngineID ${liveEngineID}\" $plistFIle\nelif [ ! -d \"./GJLiveEngine/GJLiveEngine.framework\" ]; then\n\ncd GJLiveEngine\ngit pull\ngit checkout .\nliveEngineID=`git rev-parse --short HEAD`\ncd ..\n\nplistFIle=\"GJLiveEngineDemo/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set GJLiveEngineID ${liveEngineID}\" $plistFIle\nfi\n";
+			shellScript = "if [ ! -f \"./GJLiveEngine/.git\" ]; then\n\nrm -rf ./GJLiveEngine\ngit clone git@github.com:MinorUncle/GJLiveEngine.git\ncd GJLiveEngine\nliveEngineID=`git rev-parse --short HEAD`\ncd ..\nplistFIle=\"GJLiveEngineDemo/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set GJLiveEngineID ${liveEngineID}\" $plistFIle\nelif [ ! -d \"./GJLiveEngine/GJLiveEngine.framework\" ]; then\n\ncd GJLiveEngine\ngit pull\ngit checkout .\nliveEngineID=`git rev-parse --short HEAD`\ncd ..\n\nplistFIle=\"GJLiveEngineDemo/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set GJLiveEngineID ${liveEngineID}\" $plistFIle\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
