@@ -1,0 +1,3 @@
+[submodule "GJLiveEngine"]
+	path = GJLiveEngine
+	url = git@github.com:MinorUncle/GJLiveEngine.git
