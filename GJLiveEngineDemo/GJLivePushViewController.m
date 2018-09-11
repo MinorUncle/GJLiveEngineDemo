@@ -162,7 +162,7 @@
         _videoSize = @{
 //                       @"360*480":[NSValue valueWithCGSize:CGSizeMake(360, 480)],
 //                       @"540*960":[NSValue valueWithCGSize:CGSizeMake(540, 960)],
-                       @"480*640":[NSValue valueWithCGSize:CGSizeMake(480, 640)],
+                       @"480*800":[NSValue valueWithCGSize:CGSizeMake(480, 800)],
                        @"720*1280":[NSValue valueWithCGSize:CGSizeMake(720, 1280)]
                        };
         _stickerPath = @[@"bear",@"bd",@"hkbs",@"lb",@"null"];
@@ -174,7 +174,7 @@
         
         config.mPushSize = (GSize){pushSize.width,pushSize.height};
         
-        config.mVideoBitrate = 8*80*1024;
+        config.mVideoBitrate = 650*1000;
         if (type == kGJCaptureTypePaint) {
             config.mFps = 30;
         }else{
