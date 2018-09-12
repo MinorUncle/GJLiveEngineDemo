@@ -96,6 +96,10 @@
     UITapGestureRecognizer* _tapGesture;
     UIScrollView*   _contentView;
     NSArray<NSString*>* _stickerPath;
+    NSFileHandle* _dropRateFile;
+    NSFileHandle* _encodeRateFile;
+    long unitDropCount;
+    long totalDropCount;
 
 }
 
@@ -160,10 +164,10 @@
 
         _pushAddr = url;
         _videoSize = @{
-//                       @"360*480":[NSValue valueWithCGSize:CGSizeMake(360, 480)],
-//                       @"540*960":[NSValue valueWithCGSize:CGSizeMake(540, 960)],
-                       @"480*800":[NSValue valueWithCGSize:CGSizeMake(480, 800)],
-                       @"720*1280":[NSValue valueWithCGSize:CGSizeMake(720, 1280)]
+                       @"360*640":[NSValue valueWithCGSize:CGSizeMake(360, 640)],
+                       @"540*960":[NSValue valueWithCGSize:CGSizeMake(540, 960)],
+//                       @"480*800":[NSValue valueWithCGSize:CGSizeMake(480, 800)],
+//                       @"720*1280":[NSValue valueWithCGSize:CGSizeMake(720, 1280)]
                        };
         _stickerPath = @[@"bear",@"bd",@"hkbs",@"lb",@"null"];
 
@@ -174,7 +178,7 @@
         
         config.mPushSize = (GSize){pushSize.width,pushSize.height};
         
-        config.mVideoBitrate = 650*1000;
+        config.mVideoBitrate = 80*8*1024;
         if (type == kGJCaptureTypePaint) {
             config.mFps = 30;
         }else{
@@ -625,7 +629,7 @@
         }
     }];
 }
-
+GVoid GJ_GetTimeStr(GChar *dest);
 -(void)takeSelect:(UIButton*)btn{
     btn.selected = !btn.selected;
     if (btn == _paintBtn) {
@@ -787,12 +791,18 @@
         }
         
     }else if (btn == _pushStartBtn) {
+        char timeStr[20];
+        GJ_GetTimeStr(timeStr);
+        NSString* dropPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+        dropPath = [dropPath stringByAppendingFormat:@"drop_%s.txt",timeStr];
         if (btn.selected) {
-            
-            NSString* path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
-            path = [path stringByAppendingPathComponent:@"test.mp4"];
+            unitDropCount = totalDropCount = 0;
+//            NSString* path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+//            path = [path stringByAppendingPathComponent:@"test.mp4"];
             _sizeChangeBtn.enabled = NO;
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                [[NSFileManager defaultManager]createFileAtPath:dropPath contents:nil attributes:nil];
+                _dropRateFile = [NSFileHandle fileHandleForWritingAtPath:dropPath];
                 if(![_livePush startStreamPushWithUrl:_pushAddr]){
                     [_livePush stopStreamPush];
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -805,6 +815,10 @@
         }else{
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 [_livePush stopStreamPush];
+                NSString* dataStr = [NSString stringWithFormat:@"total: %ld\n",totalDropCount];
+                [_dropRateFile writeData:[NSData dataWithBytes:dataStr.UTF8String length:dataStr.length]];
+                [_dropRateFile closeFile];
+                _dropRateFile = nil;
             });
             _sizeChangeBtn.enabled = YES;
         }
@@ -955,12 +969,19 @@
 }
 
 -(void)livePush:(GJLivePush *)livePush updatePushStatus:(GJPushSessionStatus *)status{
-    _vSendRateLab.text = [NSString stringWithFormat:@"V BPS P:%0.2f E:%0.2f",status->videoStatus.pushBitrate/1024.0,status->videoStatus.encodeBitrate/1024.0];
-    _aSendRateLab.text = [NSString stringWithFormat:@"A BPS P:%0.2f E:%0.2f",status->audioStatus.pushBitrate/1024.0,status->audioStatus.encodeBitrate/1024.0];
+    _vSendRateLab.text = [NSString stringWithFormat:@"V BPS P:%0.2f E:%0.2f",status->videoStatus.pushBitrate/1024.0/8,status->videoStatus.encodeBitrate/1024.0/8];
+    _aSendRateLab.text = [NSString stringWithFormat:@"A BPS P:%0.2f E:%0.2f",status->audioStatus.pushBitrate/1024.0/8,status->audioStatus.encodeBitrate/1024.0/8];
 
     _fpsLab.text = [NSString stringWithFormat:@"FPS V:%0.2f,A:%0.2f",status->videoStatus.frameRate,status->audioStatus.frameRate];
     _delayVLab.text = [NSString stringWithFormat:@"cache V t:%ld ms f:%ld",status->videoStatus.cacheTime,status->videoStatus.cacheCount];
     _delayALab.text = [NSString stringWithFormat:@"cache A t:%ld ms f:%ld",status->audioStatus.cacheTime,status->audioStatus.cacheCount];
+    
+    unitDropCount = status->videoStatus.dropCount - totalDropCount;
+    assert(unitDropCount < 6);
+    totalDropCount = status->videoStatus.dropCount;
+    NSString* dataStr = [NSString stringWithFormat:@"%ld  %d  %d\n",unitDropCount,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate];
+    NSLog(@"log:%@",dataStr);
+    [_dropRateFile writeData:[NSData dataWithBytes:dataStr.UTF8String length:dataStr.length]];
 }
 
 @end
