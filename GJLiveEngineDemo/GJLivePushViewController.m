@@ -178,11 +178,11 @@
         
         config.mPushSize = (GSize){pushSize.width,pushSize.height};
         
-        config.mVideoBitrate = 80*8*1024;
+        config.mVideoBitrate = 800*1000;
         if (type == kGJCaptureTypePaint) {
             config.mFps = 30;
         }else{
-            config.mFps = 25;
+            config.mFps = 18;
         }
         config.mAudioBitrate = 64*1000;
         _livePush = [[GJLivePush alloc]init];
@@ -803,6 +803,8 @@ GVoid GJ_GetTimeStr(GChar *dest);
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 [[NSFileManager defaultManager]createFileAtPath:dropPath contents:nil attributes:nil];
                 _dropRateFile = [NSFileHandle fileHandleForWritingAtPath:dropPath];
+                NSString* fristLine = @"dropCount  encodeBitrate  sendBitrate\n";
+                [_dropRateFile writeData:[NSData dataWithBytes:fristLine.UTF8String length:fristLine.length]];
                 if(![_livePush startStreamPushWithUrl:_pushAddr]){
                     [_livePush stopStreamPush];
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -977,10 +979,9 @@ GVoid GJ_GetTimeStr(GChar *dest);
     _delayALab.text = [NSString stringWithFormat:@"cache A t:%ld ms f:%ld",status->audioStatus.cacheTime,status->audioStatus.cacheCount];
     
     unitDropCount = status->videoStatus.dropCount - totalDropCount;
-    assert(unitDropCount < 6);
     totalDropCount = status->videoStatus.dropCount;
     NSString* dataStr = [NSString stringWithFormat:@"%ld  %d  %d\n",unitDropCount,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate];
-    NSLog(@"log:%@",dataStr);
+    NSLog(@"dropLog:%@",dataStr);
     [_dropRateFile writeData:[NSData dataWithBytes:dataStr.UTF8String length:dataStr.length]];
 }
 
