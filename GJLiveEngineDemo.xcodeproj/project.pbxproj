@@ -12,34 +12,12 @@
 		2707293620F24C9E00DA051F /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 2707292C20F24C9E00DA051F /* ioapi.c */; };
 		2707293720F24C9E00DA051F /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 2707292D20F24C9E00DA051F /* mztools.c */; };
 		2707293820F24C9E00DA051F /* ZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 2707293320F24C9E00DA051F /* ZipArchive.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		2707293C20F24DAD00DA051F /* track_data.dat in Resources */ = {isa = PBXBuildFile; fileRef = 2707293B20F24DAD00DA051F /* track_data.dat */; };
-		2707294120F24F0D00DA051F /* bd.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2707293D20F24F0C00DA051F /* bd.zip */; };
-		2707294220F24F0D00DA051F /* hkbs.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2707293E20F24F0C00DA051F /* hkbs.zip */; };
-		2707294320F24F0D00DA051F /* lb.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2707293F20F24F0D00DA051F /* lb.zip */; };
-		2707294420F24F0D00DA051F /* bear.zip in Resources */ = {isa = PBXBuildFile; fileRef = 2707294020F24F0D00DA051F /* bear.zip */; };
-		2707298C20F389C400DA051F /* ios.h264 in Resources */ = {isa = PBXBuildFile; fileRef = 2707297420F389C400DA051F /* ios.h264 */; };
 		275299C72118368B00DD0403 /* LIveStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB297E41F4D8A9C00115220 /* LIveStartViewController.m */; };
 		275299C821183C0C00DD0403 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 046F599D1E2E1C38007901EB /* libstdc++.tbd */; };
 		275299C921183C1100DD0403 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C573F16F1D4B4146002607B6 /* libz.tbd */; };
 		275299CA21183C9800DD0403 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A40DFCD1EE8E1320047E0F0 /* Accelerate.framework */; };
 		276408AD21245D8600D6171E /* GJLiveEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276408AC21245D8600D6171E /* GJLiveEngine.framework */; };
-		6A03892B1FF13004005AC7CE /* Particle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A03892A1FF13004005AC7CE /* Particle.png */; };
 		6A04022020CA5A190098A86C /* GJLivePushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041702841E5FC3D100D5B5D9 /* GJLivePushViewController.m */; };
-		6A3488431F453803008223AA /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A34882B1F453803008223AA /* 0.png */; };
-		6A3488441F453803008223AA /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A34882C1F453803008223AA /* 1.png */; };
-		6A3488451F453803008223AA /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A34882D1F453803008223AA /* 2.png */; };
-		6A3488461F453803008223AA /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A34882E1F453803008223AA /* 3.png */; };
-		6A3488471F453803008223AA /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A34882F1F453803008223AA /* 4.png */; };
-		6A3488481F453803008223AA /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A3488301F453803008223AA /* 5.png */; };
-		6A34884A1F453803008223AA /* index0.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A3488321F453803008223AA /* index0.png */; };
-		6A34884B1F453803008223AA /* index1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A3488331F453803008223AA /* index1.png */; };
-		6A34884C1F453803008223AA /* index2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A3488341F453803008223AA /* index2.png */; };
-		6A34884D1F453803008223AA /* index3.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A3488351F453803008223AA /* index3.png */; };
-		6A34884E1F453803008223AA /* index4.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A3488361F453803008223AA /* index4.png */; };
-		6A34884F1F453803008223AA /* index5.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A3488371F453803008223AA /* index5.png */; };
-		6A582239202AF473002AFF76 /* client.json in Resources */ = {isa = PBXBuildFile; fileRef = 6A582238202AF473002AFF76 /* client.json */; };
-		6A7B2C671EFBBEF10036CE92 /* OrganRun.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6A7B2C661EFBBEF10036CE92 /* OrganRun.m4a */; };
-		6A85F9951F00F0B10037A64F /* MixTest.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6A85F9941F00F0B00037A64F /* MixTest.mp3 */; };
 		6AF9DDB91FA976A100F6B4F7 /* GJSunSystemARScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AF9DDB81FA976A100F6B4F7 /* GJSunSystemARScene.m */; };
 		6AF9DDBB1FA97A6000F6B4F7 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AF9DDBA1FA97A5F00F6B4F7 /* art.scnassets */; };
 		C561AC9B1D51D3DC00113453 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C561ABEB1D51D3DC00113453 /* AppDelegate.m */; };
@@ -493,32 +471,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A3488481F453803008223AA /* 5.png in Resources */,
-				2707294120F24F0D00DA051F /* bd.zip in Resources */,
 				6AF9DDBB1FA97A6000F6B4F7 /* art.scnassets in Resources */,
-				6A3488431F453803008223AA /* 0.png in Resources */,
-				6A03892B1FF13004005AC7CE /* Particle.png in Resources */,
-				2707294320F24F0D00DA051F /* lb.zip in Resources */,
-				6A34884E1F453803008223AA /* index4.png in Resources */,
-				6A34884A1F453803008223AA /* index0.png in Resources */,
 				C561ACA41D51D3DC00113453 /* Main.storyboard in Resources */,
-				6A34884B1F453803008223AA /* index1.png in Resources */,
-				6A34884C1F453803008223AA /* index2.png in Resources */,
-				2707293C20F24DAD00DA051F /* track_data.dat in Resources */,
-				6A34884F1F453803008223AA /* index5.png in Resources */,
-				6A3488451F453803008223AA /* 2.png in Resources */,
-				6A34884D1F453803008223AA /* index3.png in Resources */,
-				6A3488461F453803008223AA /* 3.png in Resources */,
-				6A7B2C671EFBBEF10036CE92 /* OrganRun.m4a in Resources */,
-				6A582239202AF473002AFF76 /* client.json in Resources */,
 				C561AC9C1D51D3DC00113453 /* Assets.xcassets in Resources */,
-				2707298C20F389C400DA051F /* ios.h264 in Resources */,
 				C561ACA31D51D3DC00113453 /* LaunchScreen.storyboard in Resources */,
-				6A85F9951F00F0B10037A64F /* MixTest.mp3 in Resources */,
-				2707294220F24F0D00DA051F /* hkbs.zip in Resources */,
-				6A3488471F453803008223AA /* 4.png in Resources */,
-				6A3488441F453803008223AA /* 1.png in Resources */,
-				2707294420F24F0D00DA051F /* bear.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

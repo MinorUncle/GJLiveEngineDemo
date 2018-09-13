@@ -123,6 +123,8 @@
 @property (strong, nonatomic) UIButton *preMirror;
 @property (strong, nonatomic) UIButton *streamMirror;
 @property (strong, nonatomic) UIButton *faceSticker;
+@property (strong, nonatomic) UITextField *bitrateText;
+
 
 @property (strong, nonatomic) UIView *view;
 
@@ -417,6 +419,14 @@
     _sizeChangeBtn.backgroundColor = [UIColor clearColor];
     [_contentView addSubview:_sizeChangeBtn];
     [_btnViewsArry addObject:_sizeChangeBtn];
+    
+    _bitrateText = [[UITextField alloc]init];
+    _bitrateText.backgroundColor = [UIColor clearColor];
+    _bitrateText.textColor = [UIColor whiteColor];
+    _bitrateText.textAlignment = NSTextAlignmentCenter;
+    _bitrateText.text = @"800";
+    [_contentView addSubview:_bitrateText];
+    [_btnViewsArry addObject:_bitrateText];
 
     _inputGain = [[GJSliderView alloc]init];
     _inputGain.title = @"采集音量:0";
@@ -800,11 +810,19 @@ GVoid GJ_GetTimeStr(GChar *dest);
 //            NSString* path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
 //            path = [path stringByAppendingPathComponent:@"test.mp4"];
             _sizeChangeBtn.enabled = NO;
+            NSInteger bitrate = [_bitrateText.text integerValue];
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 [[NSFileManager defaultManager]createFileAtPath:dropPath contents:nil attributes:nil];
                 _dropRateFile = [NSFileHandle fileHandleForWritingAtPath:dropPath];
                 NSString* fristLine = @"dropCount  encodeBitrate  sendBitrate\n";
                 [_dropRateFile writeData:[NSData dataWithBytes:fristLine.UTF8String length:fristLine.length]];
+                
+                if (bitrate) {
+                    GJPushConfig config = _livePush.pushConfig;
+                    config.mVideoBitrate = (GInt32)bitrate*1000;
+                    [_livePush setPushConfig:config];
+                }
+                
                 if(![_livePush startStreamPushWithUrl:_pushAddr]){
                     [_livePush stopStreamPush];
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -1508,6 +1526,8 @@ static dispatch_queue_t _cleanMemoryQueue;
 
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+
     //    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否测试释放推拉流对象" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
     //    [alert show];
 }
@@ -1520,7 +1540,6 @@ static dispatch_queue_t _cleanMemoryQueue;
         cleanMemory(GFalse);
     }
 }
-
 -(void)dealloc{
     [_pushManager.livePush stopPreview];
     [_pushManager.livePush stopStreamPush];
