@@ -811,6 +811,14 @@ GVoid GJ_GetTimeStr(GChar *dest);
 //            path = [path stringByAppendingPathComponent:@"test.mp4"];
             _sizeChangeBtn.enabled = NO;
             NSInteger bitrate = [_bitrateText.text integerValue];
+            if(bitrate > 1400 || bitrate < 200)
+            {
+                UIAlertView* view = [[UIAlertView alloc]initWithTitle:@"警告" message:@"请将码率设置在200 - 1400之间" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
+                [view show];
+                btn.selected = NO;
+                return;
+                
+            }
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 [[NSFileManager defaultManager]createFileAtPath:dropPath contents:nil attributes:nil];
                 _dropRateFile = [NSFileHandle fileHandleForWritingAtPath:dropPath];
