@@ -17,6 +17,7 @@
 		275299C921183C1100DD0403 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C573F16F1D4B4146002607B6 /* libz.tbd */; };
 		275299CA21183C9800DD0403 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A40DFCD1EE8E1320047E0F0 /* Accelerate.framework */; };
 		276408AD21245D8600D6171E /* GJLiveEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276408AC21245D8600D6171E /* GJLiveEngine.framework */; };
+		27FD50B2214A66ED00315655 /* MixTest.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6A85F9941F00F0B00037A64F /* MixTest.mp3 */; };
 		6A04022020CA5A190098A86C /* GJLivePushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041702841E5FC3D100D5B5D9 /* GJLivePushViewController.m */; };
 		6AF9DDB91FA976A100F6B4F7 /* GJSunSystemARScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AF9DDB81FA976A100F6B4F7 /* GJSunSystemARScene.m */; };
 		6AF9DDBB1FA97A6000F6B4F7 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AF9DDBA1FA97A5F00F6B4F7 /* art.scnassets */; };
@@ -401,7 +402,7 @@
 					};
 					C54FA8A71D21006000A0D3C3 = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = N4879DD4BD;
+						DevelopmentTeam = 9VXBV77545;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -475,6 +476,7 @@
 				C561ACA41D51D3DC00113453 /* Main.storyboard in Resources */,
 				C561AC9C1D51D3DC00113453 /* Assets.xcassets in Resources */,
 				C561ACA31D51D3DC00113453 /* LaunchScreen.storyboard in Resources */,
+				27FD50B2214A66ED00315655 /* MixTest.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -722,7 +724,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = N4879DD4BD;
+				DEVELOPMENT_TEAM = 9VXBV77545;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -734,7 +736,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.melot.engine.gj;
+				PRODUCT_BUNDLE_IDENTIFIER = com.melot.engine.gjtest;
 				PRODUCT_NAME = GJLiveEngineDemo;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -748,7 +750,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = N4879DD4BD;
+				DEVELOPMENT_TEAM = 9VXBV77545;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -761,7 +763,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.melot.engine.gj;
+				PRODUCT_BUNDLE_IDENTIFIER = com.melot.engine.gjtest;
 				PRODUCT_NAME = GJLiveEngineDemo;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
