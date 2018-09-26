@@ -12,10 +12,7 @@
 #import "GJSunSystemARScene.h"
 #import <ARKit/ARConfiguration.h>
 #import "ZipArchive/ZipArchive.h"
-
-#define PUSH_TIP_SHOW 1
-#define PULL_TIP_SHOW 1
-
+#import "GJLiveDemoPrivate.h"
 
 @interface GJSliderView:UISlider{
     UILabel * _titleLab;
