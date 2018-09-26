@@ -6,15 +6,11 @@
 //  Copyright © 2017年 MinorUncle. All rights reserved.
 //
 
-#import "LIveStartViewController.h"
+#import "GJLiveStartViewController.h"
 #import "GJLivePushViewController.h"
+#import "GJLiveDemoPrivate.h"
 
-#define PULL_URL @"rtmp://live.hkstv.hk.lxdns.com/live/hks";
 
-//请注释 #import "StreamAddr.h",自行通过以下宏配置推拉流地址。
-//#define PUSH_URL
-//#define PULL_URL
-#import "StreamAddr.h"
 @interface LIveStartViewController ()
 {
     UIButton* _startBtn;

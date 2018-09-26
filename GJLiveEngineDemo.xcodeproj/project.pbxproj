@@ -12,7 +12,7 @@
 		2707293620F24C9E00DA051F /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 2707292C20F24C9E00DA051F /* ioapi.c */; };
 		2707293720F24C9E00DA051F /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 2707292D20F24C9E00DA051F /* mztools.c */; };
 		2707293820F24C9E00DA051F /* ZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 2707293320F24C9E00DA051F /* ZipArchive.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		275299C72118368B00DD0403 /* LIveStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB297E41F4D8A9C00115220 /* LIveStartViewController.m */; };
+		275299C72118368B00DD0403 /* GJLiveStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AB297E41F4D8A9C00115220 /* GJLiveStartViewController.m */; };
 		275299C821183C0C00DD0403 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 046F599D1E2E1C38007901EB /* libstdc++.tbd */; };
 		275299C921183C1100DD0403 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C573F16F1D4B4146002607B6 /* libz.tbd */; };
 		275299CA21183C9800DD0403 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A40DFCD1EE8E1320047E0F0 /* Accelerate.framework */; };
@@ -98,6 +98,7 @@
 		276408BC2124611500D6171E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		276408BD2124611500D6171E /* GJCaptureToolConfig.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GJCaptureToolConfig.entitlements; sourceTree = "<group>"; };
 		276409632126D34B00D6171E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = GJLiveEngineDemo/Info.plist; sourceTree = SOURCE_ROOT; };
+		27BD8C2A215B7F660051336D /* GJLiveDemoPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GJLiveDemoPrivate.h; sourceTree = "<group>"; };
 		27BD9B9921193876006300A6 /* GJLiveEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GJLiveEngine.xcodeproj; path = ../GJLiveEngine/GJLiveEngine.xcodeproj; sourceTree = "<group>"; };
 		27BD9BAB2119769C006300A6 /* StreamAddr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StreamAddr.h; sourceTree = "<group>"; };
 		6A03892A1FF13004005AC7CE /* Particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Particle.png; sourceTree = "<group>"; };
@@ -117,8 +118,8 @@
 		6A582238202AF473002AFF76 /* client.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = client.json; sourceTree = "<group>"; };
 		6A7B2C661EFBBEF10036CE92 /* OrganRun.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = OrganRun.m4a; sourceTree = "<group>"; };
 		6A85F9941F00F0B00037A64F /* MixTest.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MixTest.mp3; sourceTree = "<group>"; };
-		6AB297E31F4D8A9C00115220 /* LIveStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIveStartViewController.h; sourceTree = "<group>"; };
-		6AB297E41F4D8A9C00115220 /* LIveStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIveStartViewController.m; sourceTree = "<group>"; };
+		6AB297E31F4D8A9C00115220 /* GJLiveStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJLiveStartViewController.h; sourceTree = "<group>"; };
+		6AB297E41F4D8A9C00115220 /* GJLiveStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJLiveStartViewController.m; sourceTree = "<group>"; };
 		6AF9DDB51FA9763C00F6B4F7 /* SCNViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNViewController.h; sourceTree = "<group>"; };
 		6AF9DDB71FA976A100F6B4F7 /* GJSunSystemARScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GJSunSystemARScene.h; sourceTree = "<group>"; };
 		6AF9DDB81FA976A100F6B4F7 /* GJSunSystemARScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GJSunSystemARScene.m; sourceTree = "<group>"; };
@@ -342,8 +343,9 @@
 				6AF9DDB81FA976A100F6B4F7 /* GJSunSystemARScene.m */,
 				041702831E5FC3D100D5B5D9 /* GJLivePushViewController.h */,
 				041702841E5FC3D100D5B5D9 /* GJLivePushViewController.m */,
-				6AB297E31F4D8A9C00115220 /* LIveStartViewController.h */,
-				6AB297E41F4D8A9C00115220 /* LIveStartViewController.m */,
+				27BD8C2A215B7F660051336D /* GJLiveDemoPrivate.h */,
+				6AB297E31F4D8A9C00115220 /* GJLiveStartViewController.h */,
+				6AB297E41F4D8A9C00115220 /* GJLiveStartViewController.m */,
 			);
 			path = GJLiveEngineDemo;
 			sourceTree = "<group>";
@@ -514,7 +516,7 @@
 				C561AC9B1D51D3DC00113453 /* AppDelegate.m in Sources */,
 				2707293720F24C9E00DA051F /* mztools.c in Sources */,
 				2707293620F24C9E00DA051F /* ioapi.c in Sources */,
-				275299C72118368B00DD0403 /* LIveStartViewController.m in Sources */,
+				275299C72118368B00DD0403 /* GJLiveStartViewController.m in Sources */,
 				6AF9DDB91FA976A100F6B4F7 /* GJSunSystemARScene.m in Sources */,
 				C561ACB51D51D3DC00113453 /* main.m in Sources */,
 				2707293820F24C9E00DA051F /* ZipArchive.m in Sources */,

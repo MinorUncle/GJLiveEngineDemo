@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
-#import "LIveStartViewController.h"
+#import "GJLiveStartViewController.h"
 #import <GJLiveEngine/UncaughtExceptionHandler.h>
 @interface AppDelegate ()
 
