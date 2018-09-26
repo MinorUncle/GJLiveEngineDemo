@@ -147,6 +147,7 @@
 @property (strong, nonatomic) UILabel *delayVLab;
 @property (strong, nonatomic) UILabel *delayALab;
 @property (strong, nonatomic) UILabel *currentV;
+@property (strong, nonatomic) UILabel *sensitivity;
 @property (strong, nonatomic) UILabel *timeLab;
 @property (assign, nonatomic) CGRect frame;
 @property (assign, nonatomic) CGRect beforeFullframe;
@@ -276,6 +277,13 @@
     _delayALab.text = @"cache A t:0 ms f:0";
     [_tipContent addSubview:_delayALab];
     [_tipViewsArry addObject:_delayALab];
+
+    _sensitivity = [[UILabel alloc]init];
+    _sensitivity.textColor = [UIColor redColor];
+    _sensitivity.font = [UIFont systemFontOfSize:10];
+    _sensitivity.text = @"sensitivity:0";
+    [_tipContent addSubview:_sensitivity];
+    [_tipViewsArry addObject:_sensitivity];
 
     _currentV = [[UILabel alloc]init];
     _currentV.textColor = [UIColor redColor];
@@ -934,6 +942,7 @@ GVoid GJ_GetTimeStr(GChar *dest);
         NSLog(@"error");
     }
     _currentV.text = [NSString stringWithFormat:@"encode V b:%0.2fkB/s f:%0.2f",elapsed->currentBitrate/1024.0/8.0,elapsed->currentFPS];
+    _sensitivity.text = [NSString stringWithFormat:@"sensitivity:%d",elapsed->sensitivity];
 }
 -(void)livePush:(GJLivePush *)livePush errorType:(GJLiveErrorType)type infoDesc:(id)infoDesc{
     switch (type) {
