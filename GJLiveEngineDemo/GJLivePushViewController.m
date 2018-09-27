@@ -182,7 +182,7 @@
         if (type == kGJCaptureTypePaint) {
             config.mFps = 30;
         }else{
-            config.mFps = 18;
+            config.mFps = 25;
         }
         config.mAudioBitrate = 64*1000;
         _livePush = [[GJLivePush alloc]init];
@@ -191,7 +191,7 @@
         //        _livePush.enableAec = YES;
         _livePush.delegate = self;
         _livePush.cameraPosition = GJCameraPositionFront;
-        NSString* path = [[NSBundle mainBundle]pathForResource:@"track_data" ofType:@"dat"];
+//        NSString* path = [[NSBundle mainBundle]pathForResource:@"track_data" ofType:@"dat"];
 //        [_livePush prepareVideoEffectWithBaseData:path];
 //
 //        _livePush.eyeEnlargement = 50;
