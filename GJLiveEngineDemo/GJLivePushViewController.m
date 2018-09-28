@@ -97,6 +97,7 @@
     NSFileHandle* _encodeRateFile;
     long unitDropCount;
     long totalDropCount;
+    NSInteger _configBitrate;
 
 }
 
@@ -827,7 +828,7 @@ GVoid GJ_GetTimeStr(GChar *dest);
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 [[NSFileManager defaultManager]createFileAtPath:dropPath contents:nil attributes:nil];
                 _dropRateFile = [NSFileHandle fileHandleForWritingAtPath:dropPath];
-                NSString* fristLine = @"dropCount  encodeBitrate  sendBitrate\n";
+                NSString* fristLine = @"dropCount cacheCount  encodeBitrate  sendBitrate setBitrate\n";
                 [_dropRateFile writeData:[NSData dataWithBytes:fristLine.UTF8String length:fristLine.length]];
                 
                 if (bitrate) {
@@ -941,6 +942,7 @@ GVoid GJ_GetTimeStr(GChar *dest);
     if (elapsed->currentBitrate/1024.0/8 > 1000) {
         NSLog(@"error");
     }
+    _configBitrate = (NSInteger)elapsed->currentBitrate;
     _currentV.text = [NSString stringWithFormat:@"encode V b:%0.2fkB/s f:%0.2f",elapsed->currentBitrate/1024.0/8.0,elapsed->currentFPS];
     _sensitivity.text = [NSString stringWithFormat:@"sensitivity:%d",elapsed->sensitivity];
 }
@@ -1012,7 +1014,7 @@ GVoid GJ_GetTimeStr(GChar *dest);
     
     unitDropCount = status->videoStatus.dropCount - totalDropCount;
     totalDropCount = status->videoStatus.dropCount;
-    NSString* dataStr = [NSString stringWithFormat:@"%ld  %d  %d\n",unitDropCount,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate];
+    NSString* dataStr = [NSString stringWithFormat:@"%ld %ld  %d  %d %ld\n",unitDropCount,status->videoStatus.cacheCount,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate,(long)_configBitrate];
     NSLog(@"dropLog:%@",dataStr);
     [_dropRateFile writeData:[NSData dataWithBytes:dataStr.UTF8String length:dataStr.length]];
 }
