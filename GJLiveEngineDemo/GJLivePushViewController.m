@@ -93,7 +93,11 @@
     UITapGestureRecognizer* _tapGesture;
     UIScrollView*   _contentView;
     NSArray<NSString*>* _stickerPath;
-
+    long unitDropCount;
+    long totalDropCount;
+    NSInteger _configBitrate;
+    
+    GJLog*   testLog;
 }
 
 @property (strong, nonatomic) GJLivePush *livePush;
@@ -162,8 +166,8 @@
         _videoSize = @{
                        @"360*640":[NSValue valueWithCGSize:CGSizeMake(360, 640)],
                        @"540*960":[NSValue valueWithCGSize:CGSizeMake(540, 960)],
-                       @"480*800":[NSValue valueWithCGSize:CGSizeMake(480, 800)],
-                       @"720*1280":[NSValue valueWithCGSize:CGSizeMake(720, 1280)]
+//                       @"480*800":[NSValue valueWithCGSize:CGSizeMake(480, 800)],
+//                       @"720*1280":[NSValue valueWithCGSize:CGSizeMake(720, 1280)]
                        };
         _stickerPath = @[@"bear",@"bd",@"hkbs",@"lb",@"null"];
 
@@ -176,15 +180,15 @@
         
         config.mVideoBitrate = 800*1000;
         if (type == kGJCaptureTypePaint) {
-            config.mFps = 25;
+            config.mFps = 30;
         }else{
-            config.mFps = 15;
+            config.mFps = 25;
         }
         config.mAudioBitrate = 64*1000;
+        config.mMinFps = 7;
         _livePush = [[GJLivePush alloc]init];
         _livePush.captureType = type;
         [_livePush setPushConfig:config];
-        //        _livePush.enableAec = YES;
         _livePush.delegate = self;
         _livePush.cameraPosition = GJCameraPositionFront;
 //        NSString* path = [[NSBundle mainBundle]pathForResource:@"track_data" ofType:@"dat"];
@@ -640,6 +644,7 @@
         }
     }];
 }
+GVoid GJ_GetTimeStr(GChar *dest);
 -(void)takeSelect:(UIButton*)btn{
     btn.selected = !btn.selected;
     if (btn == _paintBtn) {
@@ -676,16 +681,6 @@
         
     }else if (btn == _aecBtn) {
         [_livePush setEnableAec:btn.selected];
-//        if (btn.selected) {
-//            NSMutableArray<UIImage*>* images = [NSMutableArray arrayWithCapacity:6];
-//            images[0] = [UIImage imageNamed:[NSString stringWithFormat:@"%d.png",1]];
-//
-//            CGSize size = _livePush.captureSize;
-//            GCRect rect = {size.width*0.2,size.height*0.5,100.0,100.0};
-//            [_livePush startTrackingImageWithImages:images initFrame:rect];
-//        }else{
-//            [_livePush stopTracking];
-//        }
     }else if (btn == _sizeChangeBtn) {
         btn.selected = NO;
         btn.tag++;
@@ -801,7 +796,12 @@
         }
         
     }else if (btn == _pushStartBtn) {
+        char timeStr[20];
+        GJ_GetTimeStr(timeStr);
+        NSString* dropPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+        dropPath = [dropPath stringByAppendingFormat:@"netLog_%s.txt",timeStr];
         if (btn.selected) {
+            unitDropCount = totalDropCount = 0;
 //            NSString* path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
 //            path = [path stringByAppendingPathComponent:@"test.mp4"];
             _sizeChangeBtn.enabled = NO;
@@ -815,6 +815,10 @@
                 
             }
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                [[NSFileManager defaultManager]createFileAtPath:dropPath contents:nil attributes:nil];
+                GJLog_Create(&testLog, gj_async_log);
+                GJLog_SetLogFile(testLog, dropPath.UTF8String);
+                GJCustomLOG(testLog, GJ_LOGDEBUG, "dropCount cacheCount  encodeBitrate  sendBitrate setBitrate");
                 
                 if (bitrate) {
                     GJPushConfig config = _livePush.pushConfig;
@@ -834,6 +838,8 @@
         }else{
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 [_livePush stopStreamPush];
+                GJCustomLOG(testLog, GJ_LOGDEBUG, "total: %ld",totalDropCount);
+                GJLog_Dealloc(&testLog);
             });
             _sizeChangeBtn.enabled = YES;
         }
@@ -923,6 +929,7 @@
     if (elapsed->currentBitrate/1024.0/8 > 1000) {
         NSLog(@"error");
     }
+    _configBitrate = (NSInteger)elapsed->currentBitrate;
     _currentV.text = [NSString stringWithFormat:@"encode V b:%0.2fkB/s f:%0.2f",elapsed->currentBitrate/1024.0/8.0,elapsed->currentFPS];
     _sensitivity.text = [NSString stringWithFormat:@"sensitivity:%d",elapsed->sensitivity];
 }
@@ -991,6 +998,11 @@
     _fpsLab.text = [NSString stringWithFormat:@"FPS V:%0.2f,A:%0.2f",status->videoStatus.frameRate,status->audioStatus.frameRate];
     _delayVLab.text = [NSString stringWithFormat:@"cache V t:%ld ms f:%ld",status->videoStatus.cacheTime,status->videoStatus.cacheCount];
     _delayALab.text = [NSString stringWithFormat:@"cache A t:%ld ms f:%ld",status->audioStatus.cacheTime,status->audioStatus.cacheCount];
+    
+    unitDropCount = status->videoStatus.dropCount - totalDropCount;
+    totalDropCount = status->videoStatus.dropCount;
+    
+    GJCustomLOG(testLog, GJ_LOGDEBUG, "%ld %ld  %d  %d %ld\n",unitDropCount,status->videoStatus.cacheCount,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate,(long)_configBitrate);
 }
 
 @end
@@ -1308,7 +1320,10 @@ static dispatch_queue_t _cleanMemoryQueue;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(barItemTap:)];
     _pulls = [[NSMutableArray alloc]initWithCapacity:2];
     NSString* path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, true)[0];
-    path = [path stringByAppendingPathComponent:@"live.log"];
+    GChar timestr[20];
+    GJ_GetTimeStr(timestr);
+    NSString* fileName = [NSString stringWithFormat:@"live_%s.log",timestr];
+    path = [path stringByAppendingPathComponent:fileName];
 #ifdef DEBUG
     GJ_LogSetLevel(GJ_LOGDEBUG);
 #else
