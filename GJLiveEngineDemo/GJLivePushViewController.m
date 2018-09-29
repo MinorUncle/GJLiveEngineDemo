@@ -93,12 +93,11 @@
     UITapGestureRecognizer* _tapGesture;
     UIScrollView*   _contentView;
     NSArray<NSString*>* _stickerPath;
-    NSFileHandle* _dropRateFile;
-    NSFileHandle* _encodeRateFile;
     long unitDropCount;
     long totalDropCount;
     NSInteger _configBitrate;
-
+    
+    GJLog*   testLog;
 }
 
 @property (strong, nonatomic) GJLivePush *livePush;
@@ -186,10 +185,10 @@
             config.mFps = 25;
         }
         config.mAudioBitrate = 64*1000;
+        config.mMinFps = 7;
         _livePush = [[GJLivePush alloc]init];
         _livePush.captureType = type;
         [_livePush setPushConfig:config];
-        //        _livePush.enableAec = YES;
         _livePush.delegate = self;
         _livePush.cameraPosition = GJCameraPositionFront;
 //        NSString* path = [[NSBundle mainBundle]pathForResource:@"track_data" ofType:@"dat"];
@@ -682,16 +681,6 @@ GVoid GJ_GetTimeStr(GChar *dest);
         
     }else if (btn == _aecBtn) {
         [_livePush setEnableAec:btn.selected];
-//        if (btn.selected) {
-//            NSMutableArray<UIImage*>* images = [NSMutableArray arrayWithCapacity:6];
-//            images[0] = [UIImage imageNamed:[NSString stringWithFormat:@"%d.png",1]];
-//
-//            CGSize size = _livePush.captureSize;
-//            GCRect rect = {size.width*0.2,size.height*0.5,100.0,100.0};
-//            [_livePush startTrackingImageWithImages:images initFrame:rect];
-//        }else{
-//            [_livePush stopTracking];
-//        }
     }else if (btn == _sizeChangeBtn) {
         btn.selected = NO;
         btn.tag++;
@@ -810,7 +799,7 @@ GVoid GJ_GetTimeStr(GChar *dest);
         char timeStr[20];
         GJ_GetTimeStr(timeStr);
         NSString* dropPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
-        dropPath = [dropPath stringByAppendingFormat:@"drop_%s.txt",timeStr];
+        dropPath = [dropPath stringByAppendingFormat:@"netLog_%s.txt",timeStr];
         if (btn.selected) {
             unitDropCount = totalDropCount = 0;
 //            NSString* path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
@@ -827,9 +816,9 @@ GVoid GJ_GetTimeStr(GChar *dest);
             }
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 [[NSFileManager defaultManager]createFileAtPath:dropPath contents:nil attributes:nil];
-                _dropRateFile = [NSFileHandle fileHandleForWritingAtPath:dropPath];
-                NSString* fristLine = @"dropCount cacheCount  encodeBitrate  sendBitrate setBitrate\n";
-                [_dropRateFile writeData:[NSData dataWithBytes:fristLine.UTF8String length:fristLine.length]];
+                GJLog_Create(&testLog, gj_async_log);
+                GJLog_SetLogFile(testLog, dropPath.UTF8String);
+                GJCustomLOG(testLog, GJ_LOGDEBUG, "dropCount cacheCount  encodeBitrate  sendBitrate setBitrate");
                 
                 if (bitrate) {
                     GJPushConfig config = _livePush.pushConfig;
@@ -849,10 +838,8 @@ GVoid GJ_GetTimeStr(GChar *dest);
         }else{
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 [_livePush stopStreamPush];
-                NSString* dataStr = [NSString stringWithFormat:@"total: %ld\n",totalDropCount];
-                [_dropRateFile writeData:[NSData dataWithBytes:dataStr.UTF8String length:dataStr.length]];
-                [_dropRateFile closeFile];
-                _dropRateFile = nil;
+                GJCustomLOG(testLog, GJ_LOGDEBUG, "total: %ld",totalDropCount);
+                GJLog_Dealloc(&testLog);
             });
             _sizeChangeBtn.enabled = YES;
         }
@@ -1014,9 +1001,8 @@ GVoid GJ_GetTimeStr(GChar *dest);
     
     unitDropCount = status->videoStatus.dropCount - totalDropCount;
     totalDropCount = status->videoStatus.dropCount;
-    NSString* dataStr = [NSString stringWithFormat:@"%ld %ld  %d  %d %ld\n",unitDropCount,status->videoStatus.cacheCount,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate,(long)_configBitrate];
-    NSLog(@"dropLog:%@",dataStr);
-    [_dropRateFile writeData:[NSData dataWithBytes:dataStr.UTF8String length:dataStr.length]];
+    
+    GJCustomLOG(testLog, GJ_LOGDEBUG, "%ld %ld  %d  %d %ld\n",unitDropCount,status->videoStatus.cacheCount,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate,(long)_configBitrate);
 }
 
 @end
@@ -1334,7 +1320,10 @@ static dispatch_queue_t _cleanMemoryQueue;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(barItemTap:)];
     _pulls = [[NSMutableArray alloc]initWithCapacity:2];
     NSString* path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, true)[0];
-    path = [path stringByAppendingPathComponent:@"live.log"];
+    GChar timestr[20];
+    GJ_GetTimeStr(timestr);
+    NSString* fileName = [NSString stringWithFormat:@"live_%s.log",timestr];
+    path = [path stringByAppendingPathComponent:fileName];
 #ifdef DEBUG
     GJ_LogSetLevel(GJ_LOGDEBUG);
 #else

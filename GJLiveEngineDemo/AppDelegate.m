@@ -18,7 +18,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-#ifndef DEBUG
+#ifdef DEBUG
     [UncaughtExceptionHandler InstallUncaughtExceptionHandler];
 #endif
     // Override point for customization after application launch.
