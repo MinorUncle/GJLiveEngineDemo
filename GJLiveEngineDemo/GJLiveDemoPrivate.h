@@ -10,7 +10,7 @@
 #define GJLiveDemoPrivate_h
 
 #define PULL_URL @"rtmp://live.hkstv.hk.lxdns.com/live/hks";
-
+#define RECODE_NET
 //请注释 #import "StreamAddr.h",自行通过以下宏配置推拉流地址。
 //#define PUSH_URL
 //#define PULL_URL

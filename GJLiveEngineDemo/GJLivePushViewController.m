@@ -93,11 +93,12 @@
     UITapGestureRecognizer* _tapGesture;
     UIScrollView*   _contentView;
     NSArray<NSString*>* _stickerPath;
+#ifdef RECODE_NET
     long unitDropCount;
     long totalDropCount;
     NSInteger _configBitrate;
-    
     GJLog*   testLog;
+#endif
 }
 
 @property (strong, nonatomic) GJLivePush *livePush;
@@ -801,9 +802,6 @@ GVoid GJ_GetTimeStr(GChar *dest);
         NSString* dropPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
         dropPath = [dropPath stringByAppendingFormat:@"netLog_%s.txt",timeStr];
         if (btn.selected) {
-            unitDropCount = totalDropCount = 0;
-//            NSString* path = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
-//            path = [path stringByAppendingPathComponent:@"test.mp4"];
             _sizeChangeBtn.enabled = NO;
             NSInteger bitrate = [_bitrateText.text integerValue];
             if(bitrate > 1400 || bitrate < 200)
@@ -815,11 +813,13 @@ GVoid GJ_GetTimeStr(GChar *dest);
                 
             }
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
+#ifdef RECODE_NET
+                unitDropCount = totalDropCount = 0;
                 [[NSFileManager defaultManager]createFileAtPath:dropPath contents:nil attributes:nil];
                 GJLog_Create(&testLog, gj_async_log);
                 GJLog_SetLogFile(testLog, dropPath.UTF8String);
                 GJCustomLOG(testLog, GJ_LOGDEBUG, "dropCount cacheCount  encodeBitrate  sendBitrate setBitrate");
-                
+#endif
                 if (bitrate) {
                     GJPushConfig config = _livePush.pushConfig;
                     config.mVideoBitrate = (GInt32)bitrate*1000;
@@ -838,8 +838,10 @@ GVoid GJ_GetTimeStr(GChar *dest);
         }else{
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 [_livePush stopStreamPush];
+#ifdef RECODE_NET
                 GJCustomLOG(testLog, GJ_LOGDEBUG, "total: %ld",totalDropCount);
                 GJLog_Dealloc(&testLog);
+#endif
             });
             _sizeChangeBtn.enabled = YES;
         }
@@ -929,7 +931,9 @@ GVoid GJ_GetTimeStr(GChar *dest);
     if (elapsed->currentBitrate/1024.0/8 > 1000) {
         NSLog(@"error");
     }
+#ifdef RECODE_NET
     _configBitrate = (NSInteger)elapsed->currentBitrate;
+#endif
     _currentV.text = [NSString stringWithFormat:@"encode V b:%0.2fkB/s f:%0.2f",elapsed->currentBitrate/1024.0/8.0,elapsed->currentFPS];
     _sensitivity.text = [NSString stringWithFormat:@"sensitivity:%d",elapsed->sensitivity];
 }
@@ -999,10 +1003,11 @@ GVoid GJ_GetTimeStr(GChar *dest);
     _delayVLab.text = [NSString stringWithFormat:@"cache V t:%ld ms f:%ld",status->videoStatus.cacheTime,status->videoStatus.cacheCount];
     _delayALab.text = [NSString stringWithFormat:@"cache A t:%ld ms f:%ld",status->audioStatus.cacheTime,status->audioStatus.cacheCount];
     
+#ifdef RECODE_NET
     unitDropCount = status->videoStatus.dropCount - totalDropCount;
     totalDropCount = status->videoStatus.dropCount;
-    
     GJCustomLOG(testLog, GJ_LOGDEBUG, "%ld %ld  %d  %d %ld\n",unitDropCount,status->videoStatus.cacheCount,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate,(long)_configBitrate);
+#endif
 }
 
 @end
