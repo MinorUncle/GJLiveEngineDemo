@@ -812,13 +812,14 @@ GVoid GJ_GetTimeStr(GChar *dest);
                 return;
                 
             }
+            
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
 #ifdef RECODE_NET
                 unitDropCount = totalDropCount = 0;
                 [[NSFileManager defaultManager]createFileAtPath:dropPath contents:nil attributes:nil];
                 GJLog_Create(&testLog, gj_async_log);
                 GJLog_SetLogFile(testLog, dropPath.UTF8String);
-                GJCustomLOG(testLog, GJ_LOGDEBUG, "dropCount cacheCount  encodeBitrate  sendBitrate setBitrate");
+                GJCustomLOG(testLog, GJ_LOGDEBUG, "dropCount cacheCount  encodeBitrate  sendBitrate setBitrate predictiveBitrate unitBitrate");
 #endif
                 if (bitrate) {
                     GJPushConfig config = _livePush.pushConfig;
@@ -1006,7 +1007,7 @@ GVoid GJ_GetTimeStr(GChar *dest);
 #ifdef RECODE_NET
     unitDropCount = status->videoStatus.dropCount - totalDropCount;
     totalDropCount = status->videoStatus.dropCount;
-    GJCustomLOG(testLog, GJ_LOGDEBUG, "%ld %ld  %d  %d %ld\n",unitDropCount,status->videoStatus.cacheCount,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate,(long)_configBitrate);
+    GJCustomLOG(testLog, GJ_LOGDEBUG, "NetLog %ld %ld %d %d %ld %ld %ld\n",unitDropCount,status->videoStatus.cacheCount,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate,(long)_configBitrate,(long)status->predictiveInfo.unitNetpredictiveInfo,(long)status->predictiveInfo.netpredictiveInfo);
 #endif
 }
 
