@@ -694,39 +694,39 @@ GVoid GJ_GetTimeStr(GChar *dest);
         [_livePush setPushConfig:config];
         
     }else  if (btn == _sticker) {
-//        if (btn.selected) {
-//
-//            CGRect rect = CGRectMake(0, 0, 360, 100);
-//
-//            CGRect frame = {_livePush.captureSize.width*0.5,_livePush.captureSize.height*0.5,rect.size.width,rect.size.height};
-//
-//            __weak PushManager* wkSelf = self;
-//
-//            GJCustomAnimationSticker* sticker = [GJCustomAnimationSticker stickerWithImage:[self getSnapshotImageWithSize:rect.size] frame:frame rotate:0 opaque:1];
-//
-//            [sticker setUpdateBlock:^(GJSticker * _Nonnull sticker) {
-//                static CGFloat r;
-//                r += 1;
-//                //                static UIImage* image ;
-//                //                if (image != nil) {
-//                //                    ioAttr.image = image;
-//                //                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//                //                        image = [wkSelf getSnapshotImageWithSize:rect.size];
-//                //                    });
-//                //                }else{
-//                //                    image = [wkSelf getSnapshotImageWithSize:rect.size];
-//                //                }
-//                UIImage* image = [wkSelf getSnapshotImageWithSize:rect.size];
-//                if (image) {
-//                    sticker.image  = image;
-//                }
-//                sticker.rotate = r;
-//            }];
-//            [_livePush addSticker:sticker];
-//
-//        }else{
-//            [_livePush removeStickerWithKey:nil];
-//        }
+        if (btn.selected) {
+            
+            CGRect rect = CGRectMake(0, 0, 360, 100);
+
+            CGRect frame = {0.5,0.5,rect.size.width/_livePush.captureSize.width,rect.size.height/_livePush.captureSize.height};
+
+            __weak PushManager* wkSelf = self;
+            
+            GJRealTimeSticker* sticker = [GJRealTimeSticker stickerWithImage:[self getSnapshotImageWithSize:rect.size] frame:frame rotate:0 opaque:1];
+            
+            [sticker setUpdateBlock:^(GJSticker * _Nonnull sticker) {
+                static CGFloat r;
+                r += 1;
+                //                static UIImage* image ;
+                //                if (image != nil) {
+                //                    ioAttr.image = image;
+                //                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                //                        image = [wkSelf getSnapshotImageWithSize:rect.size];
+                //                    });
+                //                }else{
+                //                    image = [wkSelf getSnapshotImageWithSize:rect.size];
+                //                }
+                UIImage* image = [wkSelf getSnapshotImageWithSize:rect.size];
+                if (image) {
+                    sticker.image  = image;
+                }
+                sticker.rotate = r;
+            }];
+            [_livePush addSticker:sticker];
+            
+        }else{
+            [_livePush removeStickerWithKey:nil];
+        }
         
         
     }else if (btn == _messureModel) {
