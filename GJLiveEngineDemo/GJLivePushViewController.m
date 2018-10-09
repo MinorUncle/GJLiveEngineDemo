@@ -698,57 +698,34 @@ GVoid GJ_GetTimeStr(GChar *dest);
             
             CGRect rect = CGRectMake(0, 0, 360, 100);
 
-            NSMutableArray<GJOverlayAttribute*>* overlays = [NSMutableArray arrayWithCapacity:6];
             CGRect frame = {_livePush.captureSize.width*0.5,_livePush.captureSize.height*0.5,rect.size.width,rect.size.height};
-            for (int i = 0; i< 1; i++) {
-                overlays[0] = [GJOverlayAttribute overlayAttributeWithImage:[self getSnapshotImageWithSize:rect.size] frame:frame rotate:0];
-            }
+
             __weak PushManager* wkSelf = self;
-            [_livePush startStickerWithImages:overlays fps:15 updateBlock:^ void(NSInteger index,const GJOverlayAttribute* ioAttr, BOOL *ioFinish) {
-                
-                *ioFinish = NO;
-                if (*ioFinish) {
-                    btn.selected = NO;
-                }
+            
+            GJCustomAnimationSticker* sticker = [GJCustomAnimationSticker stickerWithImage:[self getSnapshotImageWithSize:rect.size] frame:frame rotate:0 opaque:1];
+            
+            [sticker setUpdateBlock:^(GJSticker * _Nonnull sticker) {
                 static CGFloat r;
                 r += 1;
-//                static UIImage* image ;
-//                if (image != nil) {
-//                    ioAttr.image = image;
-//                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//                        image = [wkSelf getSnapshotImageWithSize:rect.size];
-//                    });
-//                }else{
-//                    image = [wkSelf getSnapshotImageWithSize:rect.size];
-//                }
+                //                static UIImage* image ;
+                //                if (image != nil) {
+                //                    ioAttr.image = image;
+                //                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                //                        image = [wkSelf getSnapshotImageWithSize:rect.size];
+                //                    });
+                //                }else{
+                //                    image = [wkSelf getSnapshotImageWithSize:rect.size];
+                //                }
                 UIImage* image = [wkSelf getSnapshotImageWithSize:rect.size];
                 if (image) {
-                    ioAttr.image  = image;
+                    sticker.image  = image;
                 }
-                ioAttr.rotate = r;
+                sticker.rotate = r;
             }];
+            [_livePush addSticker:sticker];
             
-            //            NSMutableArray<UIImage*>* images = [NSMutableArray arrayWithCapacity:6];
-            //            for (int i = 0; i< 1 ; i++) {
-            //                images[i] = [UIImage imageNamed:[NSString stringWithFormat:@"%d.png",i]];
-            //            }
-            //            CGSize size = _livePush.captureSize;
-            //            GCRect rect = {size.width*0.5,size.height*0.5,100.0,100.0};
-            //            GJStickerAttribute* attr = [GJStickerAttribute stickerAttributWithFrame:rect rotate:0];
-            //            [_livePush startStickerWithImages:images attribure:attr fps:15 updateBlock:^GJStickerAttribute *(NSInteger index, BOOL *ioFinish) {
-            //                GCRect re = rect;
-            //                re.size.width = images[index].size.width;
-            //                re.size.height = images[index].size.height;
-            //                *ioFinish = NO;
-            //                if (*ioFinish) {
-            //                    btn.selected = NO;
-            //                }
-            //                static CGFloat r;
-            //                r += 5;
-            //                return [GJStickerAttribute stickerAttributWithFrame:re rotate:r];
-            //            }];
         }else{
-            [_livePush chanceSticker];
+            [_livePush removeStickerWithKey:nil];
         }
         
         
