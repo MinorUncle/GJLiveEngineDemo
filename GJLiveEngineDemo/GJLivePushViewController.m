@@ -186,7 +186,7 @@
             config.mFps = 25;
         }
         config.mAudioBitrate = 64*1000;
-        config.mMinFps = 7;
+        config.mMinFps = 6;
         _livePush = [[GJLivePush alloc]init];
         _livePush.captureType = type;
         [_livePush setPushConfig:config];
@@ -694,39 +694,39 @@ GVoid GJ_GetTimeStr(GChar *dest);
         [_livePush setPushConfig:config];
         
     }else  if (btn == _sticker) {
-        if (btn.selected) {
-            
-            CGRect rect = CGRectMake(0, 0, 360, 100);
-
-            CGRect frame = {_livePush.captureSize.width*0.5,_livePush.captureSize.height*0.5,rect.size.width,rect.size.height};
-
-            __weak PushManager* wkSelf = self;
-            
-            GJCustomAnimationSticker* sticker = [GJCustomAnimationSticker stickerWithImage:[self getSnapshotImageWithSize:rect.size] frame:frame rotate:0 opaque:1];
-            
-            [sticker setUpdateBlock:^(GJSticker * _Nonnull sticker) {
-                static CGFloat r;
-                r += 1;
-                //                static UIImage* image ;
-                //                if (image != nil) {
-                //                    ioAttr.image = image;
-                //                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                //                        image = [wkSelf getSnapshotImageWithSize:rect.size];
-                //                    });
-                //                }else{
-                //                    image = [wkSelf getSnapshotImageWithSize:rect.size];
-                //                }
-                UIImage* image = [wkSelf getSnapshotImageWithSize:rect.size];
-                if (image) {
-                    sticker.image  = image;
-                }
-                sticker.rotate = r;
-            }];
-            [_livePush addSticker:sticker];
-            
-        }else{
-            [_livePush removeStickerWithKey:nil];
-        }
+//        if (btn.selected) {
+//
+//            CGRect rect = CGRectMake(0, 0, 360, 100);
+//
+//            CGRect frame = {_livePush.captureSize.width*0.5,_livePush.captureSize.height*0.5,rect.size.width,rect.size.height};
+//
+//            __weak PushManager* wkSelf = self;
+//
+//            GJCustomAnimationSticker* sticker = [GJCustomAnimationSticker stickerWithImage:[self getSnapshotImageWithSize:rect.size] frame:frame rotate:0 opaque:1];
+//
+//            [sticker setUpdateBlock:^(GJSticker * _Nonnull sticker) {
+//                static CGFloat r;
+//                r += 1;
+//                //                static UIImage* image ;
+//                //                if (image != nil) {
+//                //                    ioAttr.image = image;
+//                //                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//                //                        image = [wkSelf getSnapshotImageWithSize:rect.size];
+//                //                    });
+//                //                }else{
+//                //                    image = [wkSelf getSnapshotImageWithSize:rect.size];
+//                //                }
+//                UIImage* image = [wkSelf getSnapshotImageWithSize:rect.size];
+//                if (image) {
+//                    sticker.image  = image;
+//                }
+//                sticker.rotate = r;
+//            }];
+//            [_livePush addSticker:sticker];
+//
+//        }else{
+//            [_livePush removeStickerWithKey:nil];
+//        }
         
         
     }else if (btn == _messureModel) {
@@ -794,9 +794,12 @@ GVoid GJ_GetTimeStr(GChar *dest);
 #ifdef RECODE_NET
                 unitDropCount = totalDropCount = 0;
                 [[NSFileManager defaultManager]createFileAtPath:dropPath contents:nil attributes:nil];
+                if (testLog) {
+                    GJLog_Dealloc(&testLog);
+                }
                 GJLog_Create(&testLog, gj_async_log);
                 GJLog_SetLogFile(testLog, dropPath.UTF8String);
-                GJCustomLOG(testLog, GJ_LOGDEBUG, "dropCount cacheCount  encodeBitrate  sendBitrate setBitrate predictiveBitrate unitBitrate");
+                GJCustomLOG(testLog, GJ_LOGDEBUG, "dropCount cacheCount  encodeBitrate  sendBitrate setBitrate unitPredictiveBitrate predictiveBitrate");
 #endif
                 if (bitrate) {
                     GJPushConfig config = _livePush.pushConfig;
@@ -984,13 +987,12 @@ GVoid GJ_GetTimeStr(GChar *dest);
 #ifdef RECODE_NET
     unitDropCount = status->videoStatus.dropCount - totalDropCount;
     totalDropCount = status->videoStatus.dropCount;
-    GJCustomLOG(testLog, GJ_LOGDEBUG, "NetLog %ld %ld %d %d %ld %ld %ld\n",unitDropCount,status->videoStatus.cacheCount,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate,(long)_configBitrate,(long)status->predictiveInfo.unitNetpredictiveInfo,(long)status->predictiveInfo.netpredictiveInfo);
+    GJCustomLOG(testLog, GJ_LOGDEBUG, "NetLog %ld %ld %d %d %ld %ld %ld",unitDropCount,status->videoStatus.cacheCount,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate,(long)_configBitrate,(long)status->predictiveInfo.unitNetpredictiveInfo,(long)status->predictiveInfo.netpredictiveInfo);
 #endif
 }
 
 @end
 
-#define PULL_COUNT 1
 @interface PullManager : NSObject<GJLivePullDelegate>
 {
     NSMutableArray<UIView*>* _viewArr;
@@ -1318,7 +1320,12 @@ static dispatch_queue_t _cleanMemoryQueue;
         _cleanMemoryQueue = dispatch_queue_create("GJ.CleanMemory", DISPATCH_QUEUE_SERIAL);
     }
     if(_type == kGJCaptureTypeAR){
-        if( [UIDevice currentDevice].systemVersion.doubleValue < 11.0 || !ARConfiguration.isSupported){
+        if (@available(iOS 11.0, *)) {
+            if(!ARConfiguration.isSupported){
+                [[[UIAlertView alloc]initWithTitle:@"提示" message:@"该手机不支持ar,已切换到普通直播" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil] show];
+                _type = kGJCaptureTypeCamera;
+            }
+        } else {
             [[[UIAlertView alloc]initWithTitle:@"提示" message:@"该手机不支持ar,已切换到普通直播" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil] show];
             _type = kGJCaptureTypeCamera;
         }
@@ -1528,9 +1535,11 @@ static dispatch_queue_t _cleanMemoryQueue;
         cleanMemory(GFalse);
     }
 }
+
 -(void)dealloc{
     [_pushManager.livePush stopPreview];
     [_pushManager.livePush stopStreamPush];
+    
     _pushManager = nil;
     
     for (PullManager* pull in _pulls) {
