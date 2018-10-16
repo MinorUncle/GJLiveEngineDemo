@@ -1269,6 +1269,11 @@ GVoid GJ_GetTimeStr(GChar *dest);
     });
 }
 
+- (void)livePull:(GJLivePull *)livePull closeConnect:(GJPullSessionInfo *)info {
+    
+}
+
+
 -(void)livePull:(GJLivePull *)livePull networkDelay:(long)delay{
     dispatch_async(dispatch_get_main_queue(), ^{
         _netDelay.text = [NSString stringWithFormat:@"Avg display delay Measure:%ld ms",delay];
@@ -1344,7 +1349,11 @@ static dispatch_queue_t _cleanMemoryQueue;
         }
         case kGJCaptureTypeAR:
         {
-            _pushManager.livePush.ARScene = [[GJSunSystemARScene alloc]init];
+            if (@available(iOS 11.0, *)) {
+                _pushManager.livePush.ARScene = [[GJSunSystemARScene alloc]init];
+            } else {
+                // Fallback on earlier versions
+            }
             break;
         }
 

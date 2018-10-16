@@ -10,6 +10,7 @@
 #import "SCNViewController.h"
 #import <GJLiveEngine/GJLivePush.h>
 
+API_AVAILABLE(ios(11.0))
 @interface GJSunSystemARScene:NSObject<GJImageARScene>
 @property(nonatomic,retain) SCNViewController* controller;
 @property(nonatomic,retain,readonly) ARSCNView* scene;

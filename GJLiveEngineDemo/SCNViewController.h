@@ -13,6 +13,7 @@
 #import <ARKit/ARKit.h>
 typedef void(^ARUpdateBlock)();
 
+API_AVAILABLE(ios(11.0))
 @interface SCNViewController : UIViewController
 @property(nonatomic, assign) BOOL isCardBoard;
 //AR视图：展示3D界面
