@@ -703,7 +703,6 @@ GVoid GJ_GetTimeStr(GChar *dest);
             __weak PushManager* wkSelf = self;
             
             GJRealTimeSticker* sticker = [GJRealTimeSticker stickerWithImage:[self getSnapshotImageWithSize:rect.size] frame:frame rotate:0 opaque:1];
-            
             [sticker setUpdateBlock:^(GJSticker * _Nonnull sticker) {
                 static CGFloat r;
                 r += 1;
@@ -722,6 +721,9 @@ GVoid GJ_GetTimeStr(GChar *dest);
                 }
                 sticker.rotate = r;
             }];
+            
+//            NSString* gifPath = [[NSBundle mainBundle]pathForResource:@"sahua" ofType:@"gif"];
+//            GJAnimationSticker* gifSticker = [GJAnimationSticker animationStickerWithGif:[NSURL fileURLWithPath:gifPath] startOffset:kCMTimeZero backgroundSize:_livePush.captureSize repeatType:kAnimationRepeatFromBegin];
             [_livePush addSticker:sticker];
             
         }else{
@@ -799,7 +801,7 @@ GVoid GJ_GetTimeStr(GChar *dest);
                 }
                 GJLog_Create(&testLog, gj_async_log);
                 GJLog_SetLogFile(testLog, dropPath.UTF8String);
-                GJCustomLOG(testLog, GJ_LOGDEBUG, "dropCount cacheCount  encodeBitrate  sendBitrate setBitrate unitPredictiveBitrate predictiveBitrate");
+                GJCustomLOG(testLog, GJ_LOGDEBUG, "dropCount cacheCount socketSize  encodeBitrate  sendBitrate setBitrate unitPredictiveBitrate predictiveBitrate");
 #endif
                 if (bitrate) {
                     GJPushConfig config = _livePush.pushConfig;
@@ -874,7 +876,9 @@ GVoid GJ_GetTimeStr(GChar *dest);
     NSString *dateTime = [formatter stringFromDate:[NSDate date]];
     
     CGRect rect = CGRectMake(0, 0, size.width, size.height);
-    NSDictionary* attr = @{NSFontAttributeName:[UIFont systemFontOfSize:20]};
+    NSDictionary* attr = @{NSFontAttributeName:[UIFont systemFontOfSize:20],
+                           NSForegroundColorAttributeName:[UIColor blackColor],
+                           };
 
     static CGPoint fontPoint ;
     if (fontPoint.y < 0.0001) {
@@ -987,7 +991,7 @@ GVoid GJ_GetTimeStr(GChar *dest);
 #ifdef RECODE_NET
     unitDropCount = status->videoStatus.dropCount - totalDropCount;
     totalDropCount = status->videoStatus.dropCount;
-    GJCustomLOG(testLog, GJ_LOGDEBUG, "NetLog %ld %ld %d %d %ld %ld %ld",unitDropCount,status->videoStatus.cacheCount,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate,(long)_configBitrate,(long)status->predictiveInfo.unitNetpredictiveInfo,(long)status->predictiveInfo.netpredictiveInfo);
+    GJCustomLOG(testLog, GJ_LOGDEBUG, "NetLog %ld %ld %d %d %d %ld %ld %ld",unitDropCount,status->videoStatus.cacheCount,status->socketCacheByte,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate,(long)_configBitrate,(long)status->predictiveInfo.unitNetpredictiveInfo,(long)status->predictiveInfo.netpredictiveInfo);
 #endif
 }
 
@@ -1008,8 +1012,8 @@ GVoid GJ_GetTimeStr(GChar *dest);
 @property (strong, nonatomic) UILabel    *playerBufferLab;
 @property (strong, nonatomic) UILabel    *netDelay;
 @property (strong, nonatomic) UILabel    *shakeRange;
-@property (strong, nonatomic) UILabel    *netShake;
-@property (strong, nonatomic) UILabel    *testNetShake;
+//@property (strong, nonatomic) UILabel    *netShake;
+//@property (strong, nonatomic) UILabel    *testNetShake;
 @property (strong, nonatomic) UILabel    *dewaterStatus;
 @property (strong, nonatomic) UIView     * view;;
 @property (strong, nonatomic) GJLivePull * pull;
@@ -1114,13 +1118,13 @@ GVoid GJ_GetTimeStr(GChar *dest);
     [_tipContentView addSubview:_netDelay];
     [_viewArr addObject:_netDelay];
 
-    _testNetShake = [[UILabel alloc]init];
-    _testNetShake.numberOfLines = 0;
-    _testNetShake.textColor = [UIColor redColor];
-    _testNetShake.text = @"Max netShake Measure:未工作";
-    _testNetShake.font = [UIFont systemFontOfSize:10];
-    [_tipContentView addSubview:_testNetShake];
-    [_viewArr addObject:_testNetShake];
+//    _testNetShake = [[UILabel alloc]init];
+//    _testNetShake.numberOfLines = 0;
+//    _testNetShake.textColor = [UIColor redColor];
+//    _testNetShake.text = @"Max netShake Measure:未工作";
+//    _testNetShake.font = [UIFont systemFontOfSize:10];
+//    [_tipContentView addSubview:_testNetShake];
+//    [_viewArr addObject:_testNetShake];
 
     _shakeRange = [[UILabel alloc]init];
     _shakeRange.numberOfLines = 0;
@@ -1130,13 +1134,13 @@ GVoid GJ_GetTimeStr(GChar *dest);
     [_tipContentView addSubview:_shakeRange];
     [_viewArr addObject:_shakeRange];
 
-    _netShake = [[UILabel alloc]init];
-    _netShake.numberOfLines = 0;
-    _netShake.textColor = [UIColor redColor];
-    _netShake.text = @"Max netShake:0 ms";
-    _netShake.font = [UIFont systemFontOfSize:10];
-    [_tipContentView addSubview:_netShake];
-    [_viewArr addObject:_netShake];
+//    _netShake = [[UILabel alloc]init];
+//    _netShake.numberOfLines = 0;
+//    _netShake.textColor = [UIColor redColor];
+//    _netShake.text = @"Max netShake:0 ms";
+//    _netShake.font = [UIFont systemFontOfSize:10];
+//    [_tipContentView addSubview:_netShake];
+//    [_viewArr addObject:_netShake];
 
     _dewaterStatus = [[UILabel alloc]init];
     _dewaterStatus.numberOfLines = 0;
@@ -1212,12 +1216,12 @@ GVoid GJ_GetTimeStr(GChar *dest);
 }
 
 -(void)livePull:(GJLivePull *)livePull netShakeUpdate:(GJShakeUpdateInfo*)shake{
-    _netShake.text = [NSString stringWithFormat:@"shake:%ld ms shakeDuring:%ld",shake->shake,shake->netShakeRange];
+//    _netShake.text = [NSString stringWithFormat:@"shake:%ld ms shakeDuring:%ld",shake->shake,shake->netShakeRange];
     _shakeRange.text = [NSString stringWithFormat:@"low:%ld control:%ld high:%ld",shake->lowWater,shake->controlWater,shake->highWater];
 }
 
 -(void)livePull:(GJLivePull *)livePull testNetShake:(long)shake{
-    _testNetShake.text = [NSString stringWithFormat:@"Max NetShake Measure:%ld ms",shake];
+//    _testNetShake.text = [NSString stringWithFormat:@"Max NetShake Measure:%ld ms",shake];
 }
 
 -(void)livePull:(GJLivePull *)livePull dewaterUpdate:(BOOL)isDewatering{

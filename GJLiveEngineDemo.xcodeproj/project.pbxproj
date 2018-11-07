@@ -17,6 +17,7 @@
 		275299C921183C1100DD0403 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C573F16F1D4B4146002607B6 /* libz.tbd */; };
 		275299CA21183C9800DD0403 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A40DFCD1EE8E1320047E0F0 /* Accelerate.framework */; };
 		276408AD21245D8600D6171E /* GJLiveEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276408AC21245D8600D6171E /* GJLiveEngine.framework */; };
+		276F43812179CF3800ECF347 /* sahua.gif in Resources */ = {isa = PBXBuildFile; fileRef = 276F43802179CF3800ECF347 /* sahua.gif */; };
 		27FD50B2214A66ED00315655 /* MixTest.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6A85F9941F00F0B00037A64F /* MixTest.mp3 */; };
 		6A04022020CA5A190098A86C /* GJLivePushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041702841E5FC3D100D5B5D9 /* GJLivePushViewController.m */; };
 		6AF9DDB91FA976A100F6B4F7 /* GJSunSystemARScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AF9DDB81FA976A100F6B4F7 /* GJSunSystemARScene.m */; };
@@ -98,6 +99,7 @@
 		276408BC2124611500D6171E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		276408BD2124611500D6171E /* GJCaptureToolConfig.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GJCaptureToolConfig.entitlements; sourceTree = "<group>"; };
 		276409632126D34B00D6171E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = GJLiveEngineDemo/Info.plist; sourceTree = SOURCE_ROOT; };
+		276F43802179CF3800ECF347 /* sahua.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = sahua.gif; sourceTree = "<group>"; };
 		27BD8C2A215B7F660051336D /* GJLiveDemoPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GJLiveDemoPrivate.h; sourceTree = "<group>"; };
 		27BD9B9921193876006300A6 /* GJLiveEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GJLiveEngine.xcodeproj; path = ../GJLiveEngine/GJLiveEngine.xcodeproj; sourceTree = "<group>"; };
 		27BD9BAB2119769C006300A6 /* StreamAddr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StreamAddr.h; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 			children = (
 				6A34882A1F453803008223AA /* Image */,
 				6A85F9941F00F0B00037A64F /* MixTest.mp3 */,
+				276F43802179CF3800ECF347 /* sahua.gif */,
 				2707297420F389C400DA051F /* ios.h264 */,
 				2707293D20F24F0C00DA051F /* bd.zip */,
 				2707294020F24F0D00DA051F /* bear.zip */,
@@ -404,7 +407,7 @@
 					};
 					C54FA8A71D21006000A0D3C3 = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = 2X3RULC2TF;
+						DevelopmentTeam = XXHND5J98K;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -478,6 +481,7 @@
 				C561ACA41D51D3DC00113453 /* Main.storyboard in Resources */,
 				C561AC9C1D51D3DC00113453 /* Assets.xcassets in Resources */,
 				C561ACA31D51D3DC00113453 /* LaunchScreen.storyboard in Resources */,
+				276F43812179CF3800ECF347 /* sahua.gif in Resources */,
 				27FD50B2214A66ED00315655 /* MixTest.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -727,7 +731,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 2X3RULC2TF;
+				DEVELOPMENT_TEAM = XXHND5J98K;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -742,7 +746,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.melot.engine.gjtest;
 				PRODUCT_NAME = GJLiveEngineDemo;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = DianXiong_Wildcard;
+				PROVISIONING_PROFILE_SPECIFIER = BytedanceTech_Wildcard;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
@@ -751,7 +755,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
