@@ -991,7 +991,7 @@ GVoid GJ_GetTimeStr(GChar *dest);
 #ifdef RECODE_NET
     unitDropCount = status->videoStatus.dropCount - totalDropCount;
     totalDropCount = status->videoStatus.dropCount;
-    GJCustomLOG(testLog, GJ_LOGDEBUG, "NetLog %ld %ld %d %d %d %ld %ld %ld",unitDropCount,status->videoStatus.cacheCount,status->socketCacheByte,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate,(long)_configBitrate,(long)status->predictiveInfo.unitNetpredictiveInfo,(long)status->predictiveInfo.netpredictiveInfo);
+    GJCustomLOG(testLog, GJ_LOGDEBUG, "NetLog %ld %ld %d %d %ld %ld %ld",unitDropCount,status->videoStatus.cacheCount,status->socketCacheByte,(int)status->videoStatus.encodeBitrate,(int)status->videoStatus.pushBitrate,(long)_configBitrate,(long)status->predictiveInfo.unitNetpredictiveInfo,(long)status->predictiveInfo.netpredictiveInfo);
 #endif
 }
 
